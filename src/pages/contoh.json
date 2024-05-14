@@ -1,0 +1,238 @@
+{
+  "object": "list",
+  "results": [
+    {
+      "object": "page",
+      "id": "ace813a8-f5f7-4474-b2e0-49703d14d7c7",
+      "created_time": "2024-05-13T06:01:00.000Z",
+      "last_edited_time": "2024-05-13T06:02:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "ebf59dc5-4a02-4b35-aab4-a8a5d04f067f"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "ebf59dc5-4a02-4b35-aab4-a8a5d04f067f"
+      },
+      "cover": null,
+      "icon": null,
+      "parent": {
+        "type": "database_id",
+        "database_id": "ef427d6a-da93-4385-82ce-586c54388eed"
+      },
+      "archived": false,
+      "in_trash": false,
+      "properties": {
+        "title": {
+          "id": "JdEM",
+          "type": "rich_text",
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "coba title link 2",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "coba title link 2",
+              "href": null
+            }
+          ]
+        },
+        "link": {
+          "id": "d%7Cwu",
+          "type": "url",
+          "url": "coba link 2"
+        },
+        "img": {
+          "id": "oai%3E",
+          "type": "files",
+          "files": [
+            {
+              "name": "logo.png",
+              "type": "file",
+              "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/f1107d60-35db-4a84-9bab-246b74b407cf/5ac49bf4-0fd0-4776-b12c-c711b0c142c4/logo.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240514%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240514T100049Z&X-Amz-Expires=3600&X-Amz-Signature=00b1673c6880d6971f5fabb29b8d35d7118c0b49f05cb94aaeedf3fb31e17a20&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2024-05-14T11:00:49.050Z"
+              }
+            }
+          ]
+        },
+        "name": {
+          "id": "vrFw",
+          "type": "rich_text",
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "coba nama 2",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "coba nama 2",
+              "href": null
+            }
+          ]
+        },
+        "description": {
+          "id": "title",
+          "type": "title",
+          "title": [
+            {
+              "type": "text",
+              "text": {
+                "content": "coba deskripsi 2",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "coba deskripsi 2",
+              "href": null
+            }
+          ]
+        }
+      },
+      "url": "https://www.notion.so/coba-deskripsi-2-ace813a8f5f74474b2e049703d14d7c7",
+      "public_url": "https://daf2a.notion.site/coba-deskripsi-2-ace813a8f5f74474b2e049703d14d7c7"
+    },
+    {
+      "object": "page",
+      "id": "a8c7a85f-9a16-4ccd-a7e1-25867dcd2245",
+      "created_time": "2024-05-13T06:00:00.000Z",
+      "last_edited_time": "2024-05-13T06:01:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "ebf59dc5-4a02-4b35-aab4-a8a5d04f067f"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "ebf59dc5-4a02-4b35-aab4-a8a5d04f067f"
+      },
+      "cover": null,
+      "icon": null,
+      "parent": {
+        "type": "database_id",
+        "database_id": "ef427d6a-da93-4385-82ce-586c54388eed"
+      },
+      "archived": false,
+      "in_trash": false,
+      "properties": {
+        "title": {
+          "id": "JdEM",
+          "type": "rich_text",
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "coba title link",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "coba title link",
+              "href": null
+            }
+          ]
+        },
+        "link": {
+          "id": "d%7Cwu",
+          "type": "url",
+          "url": "coba link"
+        },
+        "img": {
+          "id": "oai%3E",
+          "type": "files",
+          "files": [
+            {
+              "name": "logo.png",
+              "type": "file",
+              "file": {
+                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/f1107d60-35db-4a84-9bab-246b74b407cf/5ac49bf4-0fd0-4776-b12c-c711b0c142c4/logo.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45HZZMZUHI%2F20240514%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20240514T100049Z&X-Amz-Expires=3600&X-Amz-Signature=00b1673c6880d6971f5fabb29b8d35d7118c0b49f05cb94aaeedf3fb31e17a20&X-Amz-SignedHeaders=host&x-id=GetObject",
+                "expiry_time": "2024-05-14T11:00:49.050Z"
+              }
+            }
+          ]
+        },
+        "name": {
+          "id": "vrFw",
+          "type": "rich_text",
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "coba nama",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "coba nama",
+              "href": null
+            }
+          ]
+        },
+        "description": {
+          "id": "title",
+          "type": "title",
+          "title": [
+            {
+              "type": "text",
+              "text": {
+                "content": "coba deskripsi",
+                "link": null
+              },
+              "annotations": {
+                "bold": false,
+                "italic": false,
+                "strikethrough": false,
+                "underline": false,
+                "code": false,
+                "color": "default"
+              },
+              "plain_text": "coba deskripsi",
+              "href": null
+            }
+          ]
+        }
+      },
+      "url": "https://www.notion.so/coba-deskripsi-a8c7a85f9a164ccda7e125867dcd2245",
+      "public_url": "https://daf2a.notion.site/coba-deskripsi-a8c7a85f9a164ccda7e125867dcd2245"
+    }
+  ],
+  "next_cursor": null,
+  "has_more": false,
+  "type": "page_or_database",
+  "page_or_database": {},
+  "request_id": "1c809789-19dc-44ef-8616-c9d08473c48e"
+}
