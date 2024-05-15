@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { PinContainer } from "@/components/ui/3d-pin";
 import { useState, useEffect } from "react";
 
@@ -12,37 +13,23 @@ interface Pin {
 export default function Portfolio() {
   const [pins, setPins] = useState<Pin[]>([]);
 
-  const notionSecret = "secret_wQsgneSxAJ4w8hXQSAlab7olX6vXMb2sQibBcPhsw0I";
-  const notionDatabaseId = "ef427d6ada93438582ce586c54388eed";
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://thingproxy.freeboard.io/fetch/https://api.notion.com/v1/databases/${notionDatabaseId}/query`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${notionSecret}`,
-              "Notion-Version": "2022-06-28",
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.get('https://be-daf2a.vercel.app/api/notion-portfolio');
 
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error("Notion API request failed");
         }
 
-        const data = await response.json();
-        const results = data?.results as any[];
+        const data = response.data;
 
-        const transformedPins: Pin[] = results.map((page) => ({
-          name: page.properties?.name?.rich_text?.[0]?.plain_text ?? '',
-          title: page.properties?.title?.rich_text?.[0]?.plain_text ?? '',
-          description: page.properties?.description?.title?.[0]?.plain_text ?? '',
-          href: page.properties?.link?.url ?? '',
-          img: page.properties?.img?.files?.[0]?.file?.url ?? '', 
+        const transformedPins: Pin[] = data.map((item: any) => ({
+          name: item.name,
+          title: item.title,
+          description: item.description,
+          href: item.href,
+          img: item.img,
         }));
 
         setPins(transformedPins);
@@ -52,7 +39,7 @@ export default function Portfolio() {
     };
 
     fetchData();
-  }, [notionDatabaseId, notionSecret]); 
+  }, []);
 
   return (
     <>
@@ -62,10 +49,10 @@ export default function Portfolio() {
       </div>
       <div className="h-[40rem] w-full flex flex-wrap items-center justify-center gap-x-4 gap-y-4 mt-14 p-4 md:p-8 ">
         {pins.map((pin, index) => (
-          <a href={pin.href} target="_blank" rel="noopener noreferrer">
-            <PinContainer key={index} title={pin.title}>
+          <a href={pin.href} target="_blank" rel="noopener noreferrer" key={index}>
+            <PinContainer title={pin.title}>
               <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[16rem] ">
-                <div className="flex flex-1 w-full rounded-lg  bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500" />
+                <div className="flex flex-1 w-full rounded-lg bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500" style={{ backgroundImage: `url(${pin.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
                 <h3 className="max-w-xs !pb-2 mt-4 font-bold text-base text-slate-100">
                   {pin.name}
                 </h3>
