@@ -3,7 +3,6 @@ import Background from "./pages/Background.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
 import Journal from "./pages/Journal.tsx";
 import Gallery from "./pages/Gallery.tsx";
-import NotionPage from "./pages/NotionPage.tsx";
 
 import LogoDark from "./assets/d_logo_dark.svg";
 import LogoLight from "./assets/d_logo_light.svg";
@@ -181,7 +180,6 @@ function App() {
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/journal" element={<Journal />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/notion" element={<NotionPage />} />
           </Routes>
         </main>
       </div>
