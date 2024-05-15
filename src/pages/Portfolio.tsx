@@ -28,7 +28,7 @@ export default function Portfolio() {
           name: item.name,
           title: item.title,
           description: item.description,
-          href: item.href,
+          href: item.link,
           img: item.img,
         }));
 
