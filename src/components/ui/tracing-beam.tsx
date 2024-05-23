@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { motion, useTransform, useScroll, useSpring } from "framer-motion";
 import { cn } from "@/utils/cn";
 
@@ -10,18 +10,36 @@ export const TracingBeam = ({
   className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
 
-  const contentRef = useRef<HTMLDivElement>(null);
   const [svgHeight, setSvgHeight] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const updateHeight = () => {
+      if (contentRef.current) {
+        setSvgHeight(contentRef.current.clientHeight);
+      }
+    };
+
+    updateHeight();
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeight();
+    });
+
     if (contentRef.current) {
-      setSvgHeight(contentRef.current.offsetHeight);
+      resizeObserver.observe(contentRef.current);
     }
+
+    return () => {
+      if (contentRef.current) {
+        resizeObserver.unobserve(contentRef.current);
+      }
+    };
   }, []);
 
   const y1 = useSpring(
@@ -32,7 +50,7 @@ export const TracingBeam = ({
     }
   );
   const y2 = useSpring(
-    useTransform(scrollYProgress, [0, 1], [50, svgHeight - 200]),
+    useTransform(scrollYProgress, [0, 1], [50, svgHeight - 300]),
     {
       stiffness: 500,
       damping: 90,
@@ -75,7 +93,7 @@ export const TracingBeam = ({
         <svg
           viewBox={`0 0 20 ${svgHeight}`}
           width="20"
-          height="full"
+          height="100%"
           className=" ml-5 block fixed"
           aria-hidden="true"
         >
@@ -83,7 +101,8 @@ export const TracingBeam = ({
             d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.6} l -18 24V ${svgHeight}`}
             fill="none"
             stroke="#9091A0"
-            strokeOpacity="0.5"
+            strokeWidth="4.55"
+            strokeOpacity="0.3"
             transition={{
               duration: 10,
             }}
@@ -92,7 +111,7 @@ export const TracingBeam = ({
             d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.6} l -18 24V ${svgHeight}`}
             fill="none"
             stroke="url(#gradient)"
-            strokeWidth="3.55"
+            strokeWidth="8.55"
             className="motion-reduce:hidden"
             transition={{
               duration: 10,
