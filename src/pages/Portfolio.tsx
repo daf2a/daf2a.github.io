@@ -82,7 +82,7 @@ export default function Portfolio() {
           <Drawer key={index}>
             <DrawerTrigger asChild>
               <div onClick={() => {}}>
-                <PinContainer title={pin.title}>
+                <PinContainer title="Click for Details">
                   <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[16rem]">
                     <div
                       className="flex flex-1 w-full rounded-lg bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500"
@@ -96,7 +96,7 @@ export default function Portfolio() {
                       {pin.name}
                     </h3>
                     <div className="text-base !m-0 !p-0 font-normal">
-                      <span className="text-slate-500 ">{pin.description}</span>
+                      <span className="text-slate-500 ">{pin.title}</span>
                     </div>
                   </div>
                 </PinContainer>
