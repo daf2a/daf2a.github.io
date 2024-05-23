@@ -1,7 +1,7 @@
+import React from "react";
 import Dashboard from "./pages/Dashboard.tsx";
 import Background from "./pages/Background.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
-import Journal from "./pages/Journal.tsx";
 import Gallery from "./pages/Gallery.tsx";
 
 import LogoDark from "./assets/d_logo_dark.svg";
@@ -10,7 +10,7 @@ import LogoLight from "./assets/d_logo_light.svg";
 import { Menu } from "lucide-react";
 
 import { useState } from "react";
-import { Routes, Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -20,9 +20,25 @@ import "./App.css";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [activePage, setActivePage] = useState(1);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
+  };
+
+  const ActivePage = () => {
+    switch (activePage) {
+      case 1:
+        return <Dashboard />;
+      case 2:
+        return <Background />;
+      case 3:
+        return <Portfolio />;
+      case 4:
+        return <Gallery />;
+      default:
+        return <Dashboard />;
+    }
   };
 
   return (
@@ -33,6 +49,7 @@ function App() {
             <NavLink
               to="/"
               className="flex items-center gap-2 text-lg font-semibold md:text-base"
+              onClick={() => setActivePage(1)}
             >
               <img
                 src={isDarkMode ? LogoDark : LogoLight}
@@ -43,51 +60,45 @@ function App() {
             </NavLink>
             <NavLink
               to="/"
-              className={({ isActive }) =>
-                isActive
+              className={
+                activePage === 1
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
+              onClick={() => setActivePage(1)}
             >
               Dashboard
             </NavLink>
             <NavLink
-              to="background"
-              className={({ isActive }) =>
-                isActive
+              to="/"
+              className={
+                activePage === 2
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
+              onClick={() => setActivePage(2)}
             >
               Background
             </NavLink>
             <NavLink
-              to="/portfolio"
-              className={({ isActive }) =>
-                isActive
+              to="/"
+              className={
+                activePage === 3
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
+              onClick={() => setActivePage(3)}
             >
               Portfolio
             </NavLink>
             <NavLink
-              to="/journal"
-              className={({ isActive }) =>
-                isActive
+              to="/"
+              className={
+                activePage === 4
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
-            >
-              Journal
-            </NavLink>
-            <NavLink
-              to="/gallery"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-foreground"
-                  : "text-muted-foreground transition-colors hover:text-foreground"
-              }
+              onClick={() => setActivePage(4)}
             >
               Gallery
             </NavLink>
@@ -108,6 +119,7 @@ function App() {
                 <NavLink
                   to="/"
                   className="flex items-center gap-2 text-lg font-semibold"
+                  onClick={() => setActivePage(1)}
                 >
                   <img
                     src={isDarkMode ? LogoDark : LogoLight}
@@ -118,51 +130,45 @@ function App() {
                 </NavLink>
                 <NavLink
                   to="/"
-                  className={({ isActive }) =>
-                    isActive
+                  className={
+                    activePage === 1
                       ? "text-foreground"
                       : "text-muted-foreground transition-colors hover:text-foreground"
                   }
+                  onClick={() => setActivePage(1)}
                 >
                   Dashboard
                 </NavLink>
                 <NavLink
-                  to="/background"
-                  className={({ isActive }) =>
-                    isActive
+                  to="/"
+                  className={
+                    activePage === 2
                       ? "text-foreground"
                       : "text-muted-foreground transition-colors hover:text-foreground"
                   }
+                  onClick={() => setActivePage(2)}
                 >
                   Background
                 </NavLink>
                 <NavLink
-                  to="/portfolio"
-                  className={({ isActive }) =>
-                    isActive
+                  to="/"
+                  className={
+                    activePage === 3
                       ? "text-foreground"
                       : "text-muted-foreground transition-colors hover:text-foreground"
                   }
+                  onClick={() => setActivePage(3)}
                 >
                   Portfolio
                 </NavLink>
                 <NavLink
-                  to="/journal"
-                  className={({ isActive }) =>
-                    isActive
+                  to="/"
+                  className={
+                    activePage === 4
                       ? "text-foreground"
                       : "text-muted-foreground transition-colors hover:text-foreground"
                   }
-                >
-                  Journal
-                </NavLink>
-                <NavLink
-                  to="/gallery"
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground transition-colors hover:text-foreground"
-                  }
+                  onClick={() => setActivePage(4)}
                 >
                   Gallery
                 </NavLink>
@@ -174,13 +180,7 @@ function App() {
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 md:gap-8  z-0">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/background" element={<Background />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/journal" element={<Journal />} />
-            <Route path="/gallery" element={<Gallery />} />
-          </Routes>
+          <ActivePage />
         </main>
       </div>
     </ThemeProvider>
