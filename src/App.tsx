@@ -174,9 +174,9 @@ function App() {
               </nav>
             </SheetContent>
           </Sheet>
-          {/* <div className="ml-auto" onClick={toggleTheme}>
+          <div className="hidden ml-auto" onClick={toggleTheme}>
             <ModeToggle />
-          </div> */}
+          </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 md:gap-8  z-0">
           <ActivePage />
