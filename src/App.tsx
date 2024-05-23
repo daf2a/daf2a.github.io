@@ -1,4 +1,3 @@
-import React from "react";
 import Dashboard from "./pages/Dashboard.tsx";
 import Background from "./pages/Background.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
