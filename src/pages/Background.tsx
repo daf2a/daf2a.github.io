@@ -1,8 +1,67 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { TracingBeam } from "@/components/ui/tracing-beam";
 
+const loadingStates = [
+  {
+    text: "Fetching data from Notion",
+  },
+  {
+    text: "Building the background",
+  },
+  {
+    text: "Adding finishing touches",
+  },
+];
+
+interface BackgroundItem {
+  name: string;
+  description: string;
+  title: string;
+  img: string;
+}
+
 export default function Background() {
+  const [content, setContent] = useState<BackgroundItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://be-daf2a.vercel.app/api/notion-background"
+        );
+
+        if (response.status !== 200) {
+          throw new Error("Notion API request failed");
+        }
+
+        const data = response.data;
+        const transformedContent = data.map((item: any) => ({
+          name: item.name,
+          description: item.description,
+          title: item.title,
+          img: item.img,
+        }));
+
+        setContent(transformedContent);
+      } catch (error) {
+        console.error("Error fetching Notion data:", error);
+      } finally {
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
+      {isLoading && (
+        <Loader loadingStates={loadingStates} loading={isLoading} duration={2000} />
+      )}
       <div className="fixed top-0 -z-50 w-full">
         <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-grid-small-white/[0.15] bg-grid-small-black/[0.15] items-center justify-center"></div>
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
@@ -11,17 +70,17 @@ export default function Background() {
       <div className="md:pt-10 mt-8 mx-6">
         <TracingBeam>
           <div className="max-w-xl md:max-w-3xl mx-auto antialiased pt-4 relative md:px-8 text-left">
-            {dummyContent.map((item, index) => (
+            {content.map((item, index) => (
               <div key={`content-${index}`} className="mb-10">
-                <h2 className="bg-black  text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
-                  {item.badge}
+                <h2 className="bg-black text-white rounded-full text-sm w-fit px-4 py-1 mb-4">
+                  {item.title}
                 </h2>
 
-                <p className="text-xl mb-4 text-left">{item.title}</p>
+                <p className="text-xl mb-4 text-left">{item.name}</p>
                 <div className="text-sm prose prose-sm dark:prose-invert text-slate-300">
-                  {item?.image && (
+                  {item?.img && (
                     <img
-                      src={item.image}
+                      src={item.img}
                       alt="blog thumbnail"
                       style={{
                         width: "400px",
@@ -40,81 +99,3 @@ export default function Background() {
     </>
   );
 }
-
-const dummyContent = [
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    description: (
-      <>
-        <p>
-          Sit duis est minim proident non nisi velit non consectetur. Esse
-          adipisicing laboris consectetur enim ipsum reprehenderit eu deserunt
-          Lorem ut aliqua anim do. Duis cupidatat qui irure cupidatat incididunt
-          incididunt enim magna id est qui sunt fugiat. Laboris do duis pariatur
-          fugiat Lorem aute sit ullamco. Qui deserunt non reprehenderit dolore
-          nisi velit exercitation Lorem qui do enim culpa. Aliqua eiusmod in
-          occaecat reprehenderit laborum nostrud fugiat voluptate do Lorem culpa
-          officia sint labore. Tempor consectetur excepteur ut fugiat veniam
-          commodo et labore dolore commodo pariatur.
-        </p>
-        <p className="mt-4">
-          Dolor minim irure ut Lorem proident. Ipsum do pariatur est ad ad
-          veniam in commodo id reprehenderit adipisicing. Proident duis
-          exercitation ad quis ex cupidatat cupidatat occaecat adipisicing.
-        </p>
-        <p className="mt-4">
-          Tempor quis dolor veniam quis dolor. Sit reprehenderit eiusmod
-          reprehenderit deserunt amet laborum consequat adipisicing officia qui
-          irure id sint adipisicing. Adipisicing fugiat aliqua nulla nostrud.
-          Amet culpa officia aliquip deserunt veniam deserunt officia
-          adipisicing aliquip proident officia sunt.
-        </p>
-      </>
-    ),
-    badge: "React",
-    image:
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    description: (
-      <>
-        <p>
-          Ex irure dolore veniam ex velit non aute nisi labore ipsum occaecat
-          deserunt cupidatat aute. Enim cillum dolor et nulla sunt exercitation
-          non voluptate qui aliquip esse tempor. Ullamco ut sunt consectetur
-          sint qui qui do do qui do. Labore laborum culpa magna reprehenderit ea
-          velit id esse adipisicing deserunt amet dolore. Ipsum occaecat veniam
-          commodo proident aliqua id ad deserunt dolor aliquip duis veniam sunt.
-        </p>
-        <p className="mt-4">
-          In dolore veniam excepteur eu est et sunt velit. Ipsum sint esse
-          veniam fugiat esse qui sint ad sunt reprehenderit do qui proident
-          reprehenderit. Laborum exercitation aliqua reprehenderit ea sint
-          cillum ut mollit.
-        </p>
-      </>
-    ),
-    badge: "Changelog",
-    image:
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=3540&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-  {
-    title: "Lorem Ipsum Dolor Sit Amet",
-    description: (
-      <>
-        <p>
-          Ex irure dolore veniam ex velit non aute nisi labore ipsum occaecat
-          deserunt cupidatat aute. Enim cillum dolor et nulla sunt exercitation
-          non voluptate qui aliquip esse tempor. Ullamco ut sunt consectetur
-          sint qui qui do do qui do. Labore laborum culpa magna reprehenderit ea
-          velit id esse adipisicing deserunt amet dolore. Ipsum occaecat veniam
-          commodo proident aliqua id ad deserunt dolor aliquip duis veniam sunt.
-        </p>
-      </>
-    ),
-    badge: "Launch Week",
-    image:
-      "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=3506&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
-];
