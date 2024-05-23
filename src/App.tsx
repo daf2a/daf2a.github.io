@@ -207,7 +207,9 @@ function App() {
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>This Website Build Using this Framework</DialogTitle>
+                  <DialogTitle>
+                    This Website Build Using this Framework
+                  </DialogTitle>
                   <DialogDescription>
                     <div className="container py-4 lg:py-16 scale-50 md:scale-100 items-center justify-center">
                       <div className="grid sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-12">
@@ -217,11 +219,10 @@ function App() {
                             <FaReact className="flex-shrink-0 w-16 h-16 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">
-                              React.js
-                            </h3>
+                            <h3 className="text-lg font-semibold ">React.js</h3>
                             <p className="mt-1 text-muted-foreground">
-                              Front-end library for building user interfaces and components
+                              Front-end library for building user interfaces and
+                              components
                             </p>
                           </div>
                         </div>
@@ -232,11 +233,10 @@ function App() {
                             <RiNextjsLine className="flex-shrink-0 w-20 h-20 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">
-                              Next.js
-                            </h3>
+                            <h3 className="text-lg font-semibold ">Next.js</h3>
                             <p className="mt-1 text-muted-foreground">
-                              For fetch data from Notion Database API and routing
+                              For fetch data from Notion Database API and
+                              routing
                             </p>
                           </div>
                         </div>
@@ -262,11 +262,18 @@ function App() {
                             <SiNotion className="flex-shrink-0 w-14 h-14 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">
-                              Notion
-                            </h3>
+                            <h3 className="text-lg font-semibold ">Notion</h3>
                             <p className="mt-1 text-muted-foreground">
-                              To store database and content dynamically and fetch it using API
+                              To store database and content dynamically, view
+                              database{" "}
+                              <a
+                                href="https://daf2a.notion.site/Portofolio-API-0ac19e9a8a5d4edcb47863da52008ec3?pvs=4"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-500 font-bold underline"
+                              >
+                                 here
+                              </a>
                             </p>
                           </div>
                         </div>
@@ -300,7 +307,8 @@ function App() {
                               Aceternity UI
                             </h3>
                             <p className="mt-1 text-muted-foreground">
-                              For better user experience using motion and animations
+                              For better user experience using motion and
+                              animations
                             </p>
                           </div>
                         </div>
