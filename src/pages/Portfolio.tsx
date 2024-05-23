@@ -15,6 +15,9 @@ interface Pin {
 
 const loadingStates = [
   {
+    text: "Better viewed on desktop mode",
+  },
+  {
     text: "Fetching data from Notion",
   },
   {
@@ -53,12 +56,12 @@ export default function Portfolio() {
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         setIsLoading(false);
       }
     };
 
-    fetchData();
+    fetchData()
   }, []);
 
   return (
@@ -67,7 +70,7 @@ export default function Portfolio() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={2000}
+          duration={1000}
         />
       )}
       <div className="fixed top-0 -z-50 h-screen w-full">
@@ -118,16 +121,13 @@ export default function Portfolio() {
                         rel="noopener noreferrer"
                         className="text-center shadow-[0_0_0_3px_#000000_inset] px-6 py-2 bg-transparent border border-black dark:border-white dark:text-white text-black rounded-lg font-bold transform hover:-translate-y-1 transition duration-400"
                       >
-                        Figma Outline
+                        Link to Project
                       </a>
-                      <button className="shadow-[0_0_0_3px_#000000_inset] px-6 py-2 bg-transparent border border-black dark:border-white dark:text-white text-black rounded-lg font-bold transform hover:-translate-y-1 transition duration-400">
-                        Figma Outline
-                      </button>
                     </div>
                   </div>
                   {/* Col image 800x 600" */}
                   <div className="relative">
-                    <AspectRatio ratio={5/3}>
+                    <AspectRatio ratio={5 / 3}>
                       <img
                         className="object-cover w-full h-full rounded-lg border-4 md:border- border-gray-200/50 dark:border-gray-800/50"
                         src={pin.img}

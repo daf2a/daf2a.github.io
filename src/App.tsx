@@ -14,6 +14,22 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { HiSparkles } from "react-icons/hi2";
+import { FaReact } from "react-icons/fa";
+import { RiNextjsLine } from "react-icons/ri";
+import { SiNotion, SiShadcnui } from "react-icons/si";
+import { BiLogoTypescript } from "react-icons/bi";
+import AceternityLogo from "@/assets/logo.png";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import "./App.css";
 
@@ -176,6 +192,125 @@ function App() {
           </Sheet>
           <div className="hidden ml-auto" onClick={toggleTheme}>
             <ModeToggle />
+          </div>
+          <div className="ml-auto">
+            <Dialog>
+              <DialogTrigger asChild>
+                <HoverBorderGradient
+                  containerClassName="rounded-full"
+                  as="button"
+                  className="dark:bg-black bg-white py-1.5 text-black dark:text-white flex items-center text-sm space-x-2"
+                >
+                  <HiSparkles />
+                  <span>Build w/</span>
+                </HoverBorderGradient>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>This Website Build Using this Framework</DialogTitle>
+                  <DialogDescription>
+                    <div className="container py-4 lg:py-16 scale-50 md:scale-100 items-center justify-center">
+                      <div className="grid sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-12">
+                        {/* Icon Block */}
+                        <div className="text-center">
+                          <div className="flex justify-center items-center w-24 h-24 bg-primary border rounded-full mx-auto">
+                            <FaReact className="flex-shrink-0 w-16 h-16 text-primary-foreground" />
+                          </div>
+                          <div className="mt-3">
+                            <h3 className="text-lg font-semibold ">
+                              React.js
+                            </h3>
+                            <p className="mt-1 text-muted-foreground">
+                              Front-end library for building user interfaces and components
+                            </p>
+                          </div>
+                        </div>
+                        {/* End Icon Block */}
+                        {/* Icon Block */}
+                        <div className="text-center">
+                          <div className="flex justify-center items-center w-24 h-24 bg-primary border rounded-full mx-auto">
+                            <RiNextjsLine className="flex-shrink-0 w-20 h-20 text-primary-foreground" />
+                          </div>
+                          <div className="mt-3">
+                            <h3 className="text-lg font-semibold ">
+                              Next.js
+                            </h3>
+                            <p className="mt-1 text-muted-foreground">
+                              For fetch data from Notion Database API and routing
+                            </p>
+                          </div>
+                        </div>
+                        {/* End Icon Block */}
+                        {/* Icon Block */}
+                        <div className="text-center">
+                          <div className="flex justify-center items-center w-24 h-24 bg-primary border rounded-full mx-auto">
+                            <BiLogoTypescript className="flex-shrink-0 w-16 h-16 text-primary-foreground" />
+                          </div>
+                          <div className="mt-3">
+                            <h3 className="text-lg font-semibold ">
+                              TypeScript
+                            </h3>
+                            <p className="mt-1 text-muted-foreground">
+                              For type checking, module importing and exporting
+                            </p>
+                          </div>
+                        </div>
+                        {/* End Icon Block */}
+                        {/* Icon Block */}
+                        <div className="text-center">
+                          <div className="flex justify-center items-center w-24 h-24 bg-primary border rounded-full mx-auto">
+                            <SiNotion className="flex-shrink-0 w-14 h-14 text-primary-foreground" />
+                          </div>
+                          <div className="mt-3">
+                            <h3 className="text-lg font-semibold ">
+                              Notion
+                            </h3>
+                            <p className="mt-1 text-muted-foreground">
+                              To store database and content dynamically and fetch it using API
+                            </p>
+                          </div>
+                        </div>
+                        {/* End Icon Block */}
+                        {/* Icon Block */}
+                        <div className="text-center item lg:col-start-2 lg:col-end-3">
+                          <div className="flex justify-center items-center w-24 h-24 bg-primary border rounded-full mx-auto">
+                            <SiShadcnui className="flex-shrink-0 w-14 h-14 text-primary-foreground" />
+                          </div>
+                          <div className="mt-3">
+                            <h3 className="text-lg font-semibold ">
+                              Shadcn UI
+                            </h3>
+                            <p className="mt-1 text-muted-foreground">
+                              For component, theme, color and layout management
+                            </p>
+                          </div>
+                        </div>
+                        {/* End Icon Block */}
+                        {/* Icon Block Aceternity Logo*/}
+                        <div className="text-center">
+                          <div className="flex justify-center items-center w-24 h-24 bg-primary border rounded-full mx-auto">
+                            <img
+                              src={AceternityLogo}
+                              alt="Aceternity Logo"
+                              className="h-14 w-14"
+                            />
+                          </div>
+                          <div className="mt-3">
+                            <h3 className="text-lg font-semibold ">
+                              Aceternity UI
+                            </h3>
+                            <p className="mt-1 text-muted-foreground">
+                              For better user experience using motion and animations
+                            </p>
+                          </div>
+                        </div>
+                        {/* End Icon Block */}
+                      </div>
+                    </div>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
         </header>
         <main className="flex flex-1 flex-col gap-4 md:gap-8  z-0">

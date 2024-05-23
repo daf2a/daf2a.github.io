@@ -5,6 +5,9 @@ import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
 const loadingStates = [
   {
+    text: "Better viewed on desktop mode",
+  },
+  {
     text: "Fetching data from Notion",
   },
   {
@@ -49,7 +52,7 @@ export default function Gallery() {
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         setIsLoading(false);
       }
     };
@@ -60,7 +63,11 @@ export default function Gallery() {
   return (
     <>
       {isLoading && (
-        <Loader loadingStates={loadingStates} loading={isLoading} duration={2000} />
+        <Loader
+          loadingStates={loadingStates}
+          loading={isLoading}
+          duration={1000}
+        />
       )}
       <div className="fixed top-0 -z-50 h-screen w-full">
         <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-grid-white/[0.05] bg-grid-black/[0.05] items-center justify-center"></div>

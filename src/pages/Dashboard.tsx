@@ -31,12 +31,12 @@ export default function Dashboard() {
       >
         <div className="flex flex-col justify-center h-[45rem]">
           {" "}
-          <div className="text-4xl mx-auto font-normal text-neutral-700 dark:text-neutral-300">
+          <div className="text-4xl mx-auto font-normal text-neutral-700 dark:text-neutral-300 ">
             Aspiring to be a
             <FlipWords words={words} /> <br />
             software engineer
           </div>
-          <div className="flex flex-col md:flex-row space-y-4 justify-center items-center md:space-y-0 space-x-0 md:space-x-4 mt-10 mb-20">
+          <div className="flex flex-col md:flex-row space-y-4 justify-center items-center md:space-y-0 space-x-0 md:space-x-4 mt-8 mb-20">
             <Dialog>
               <DialogTrigger asChild>
                 <HoverBorderGradient
@@ -134,7 +134,7 @@ export default function Dashboard() {
         text-muted-foreground sm:flex-row sm:justify-end sm:pr-14 md:pr-18
         "
       >
-        <p>© 2024 Muhammad Daffa Ashdaqfillah</p>
+        <p>© 2024 Muhammad Daffa Ashdaqfillah </p>
       </div>
       <BackgroundBeams className="fixed -z-50" />
     </div>
