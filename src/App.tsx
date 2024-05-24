@@ -13,7 +13,12 @@ import { NavLink } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { HiSparkles } from "react-icons/hi2";
 import { FaReact } from "react-icons/fa";
@@ -131,18 +136,20 @@ function App() {
             </SheetTrigger>
             <SheetContent side="left">
               <nav className="grid gap-6 text-lg font-medium">
-                <NavLink
-                  to="/"
-                  className="flex items-center gap-2 text-lg font-semibold"
-                  onClick={() => setActivePage(1)}
-                >
-                  <img
-                    src={isDarkMode ? LogoDark : LogoLight}
-                    alt="Logo"
-                    className="h-6 w-6"
-                  />
-                  <span className="sr-only">Daf2a</span>
-                </NavLink>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/"
+                    className="flex items-center gap-2 text-lg font-semibold"
+                    onClick={() => setActivePage(1)}
+                  >
+                    <img
+                      src={isDarkMode ? LogoDark : LogoLight}
+                      alt="Logo"
+                      className="h-6 w-6"
+                    />
+                    <span className="sr-only">Daf2a</span>
+                  </NavLink>
+                </SheetClose>
                 <NavLink
                   to="/"
                   className={
@@ -154,39 +161,45 @@ function App() {
                 >
                   Dashboard
                 </NavLink>
-                <NavLink
-                  to="/"
-                  className={
-                    activePage === 2
-                      ? "text-foreground"
-                      : "text-muted-foreground transition-colors hover:text-foreground"
-                  }
-                  onClick={() => setActivePage(2)}
-                >
-                  Background
-                </NavLink>
-                <NavLink
-                  to="/"
-                  className={
-                    activePage === 3
-                      ? "text-foreground"
-                      : "text-muted-foreground transition-colors hover:text-foreground"
-                  }
-                  onClick={() => setActivePage(3)}
-                >
-                  Portfolio
-                </NavLink>
-                <NavLink
-                  to="/"
-                  className={
-                    activePage === 4
-                      ? "text-foreground"
-                      : "text-muted-foreground transition-colors hover:text-foreground"
-                  }
-                  onClick={() => setActivePage(4)}
-                >
-                  Gallery
-                </NavLink>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/"
+                    className={
+                      activePage === 2
+                        ? "text-foreground"
+                        : "text-muted-foreground transition-colors hover:text-foreground"
+                    }
+                    onClick={() => setActivePage(2)}
+                  >
+                    Background
+                  </NavLink>
+                </SheetClose>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/"
+                    className={
+                      activePage === 3
+                        ? "text-foreground"
+                        : "text-muted-foreground transition-colors hover:text-foreground"
+                    }
+                    onClick={() => setActivePage(3)}
+                  >
+                    Portfolio
+                  </NavLink>
+                </SheetClose>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/"
+                    className={
+                      activePage === 4
+                        ? "text-foreground"
+                        : "text-muted-foreground transition-colors hover:text-foreground"
+                    }
+                    onClick={() => setActivePage(4)}
+                  >
+                    Gallery
+                  </NavLink>
+                </SheetClose>
               </nav>
             </SheetContent>
           </Sheet>
@@ -272,7 +285,7 @@ function App() {
                                 rel="noopener noreferrer"
                                 className="text-blue-500 font-bold underline"
                               >
-                                 here
+                                here
                               </a>
                             </p>
                           </div>
