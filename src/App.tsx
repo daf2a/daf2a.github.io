@@ -8,11 +8,12 @@ import LogoLight from "./assets/d_logo_light.svg";
 
 import { Menu } from "lucide-react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import {
   Sheet,
   SheetContent,
@@ -34,13 +35,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 import "./App.css";
 
 function App() {
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const isSmallScreen = useMediaQuery('(max-width: 768px)');
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activePage, setActivePage] = useState(1);
+
+  useEffect(() => {
+    setIsDialogVisible(true);
+  }, []);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
@@ -63,6 +71,31 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      {isDialogVisible && isSmallScreen && (
+        <div className="md:hidden">
+          <Dialog open={isDialogVisible} onOpenChange={setIsDialogVisible}>
+            <DialogContent className="sm:max-w-md">
+              {" "}
+              {/* Center the dialog */}
+              <DialogHeader>
+                <DialogTitle>Hi there! 👋</DialogTitle>
+                <DialogDescription>
+                  This website looks even better on a desktop. <br/> Give it a try! 😉
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsDialogVisible(false)}
+                >
+                  Close
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      )}
       <div className="flex min-h-screen w-full flex-col">
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-40">
           <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
