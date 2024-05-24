@@ -15,9 +15,6 @@ interface Pin {
 
 const loadingStates = [
   {
-    text: "Better viewed on desktop mode",
-  },
-  {
     text: "Fetching data from Notion",
   },
   {
@@ -90,7 +87,7 @@ export default function Portfolio() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={1000}
+          duration={1500}
         />
       )}
       <div className="fixed top-0 -z-50 h-screen w-full">

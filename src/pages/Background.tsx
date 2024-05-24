@@ -5,9 +5,6 @@ import { TracingBeam } from "@/components/ui/tracing-beam";
 
 const loadingStates = [
   {
-    text: "Better viewed on desktop mode",
-  },
-  {
     text: "Fetching data from Notion",
   },
   {
@@ -66,7 +63,7 @@ export default function Background() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={1000}
+          duration={1500}
         />
       )}
       <div className="fixed top-0 -z-50 w-full">
