@@ -130,7 +130,7 @@ export default function Dashboard() {
         </div>
       </motion.div>
       <div
-        className="fixed bottom-10 flex w-full flex-col items-center gap-3 text-sm
+        className="fixed hidden md:flex bottom-10 w-full flex-col items-center gap-3 text-sm
         text-muted-foreground sm:flex-row sm:justify-end sm:pr-14 md:pr-18
         "
       >
