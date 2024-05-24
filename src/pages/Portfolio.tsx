@@ -147,7 +147,7 @@ export default function Portfolio() {
                         className="text-blue-500"
                         onClick={() => toggleShowMore(index)}
                       >
-                        Selengkapnya
+                        Read more
                       </a>
                     )}
                     {/* link pin herf */}
