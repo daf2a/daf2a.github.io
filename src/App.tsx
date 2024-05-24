@@ -193,7 +193,7 @@ function App() {
           <div className="hidden ml-auto" onClick={toggleTheme}>
             <ModeToggle />
           </div>
-          <div className="ml-auto">
+          <div className="hidden md:block ml-auto">
             <Dialog>
               <DialogTrigger asChild>
                 <HoverBorderGradient

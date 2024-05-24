@@ -37,6 +37,7 @@ export default function Dashboard() {
             software engineer
           </div>
           <div className="flex flex-col md:flex-row space-y-4 justify-center items-center md:space-y-0 space-x-0 md:space-x-4 mt-8 mb-20">
+            <div className="hidden md:block">
             <Dialog>
               <DialogTrigger asChild>
                 <HoverBorderGradient
@@ -74,7 +75,8 @@ export default function Dashboard() {
                             Muhammad Daffa Ashdaqfillah
                           </h1>
                           <p className="text-gray-500 dark:text-gray-400">
-                            Software Engineer || Informatics Engineering Student at Sepuluh Nopember Institute of Technology
+                            Software Engineer || Informatics Engineering Student
+                            at Sepuluh Nopember Institute of Technology
                           </p>
                         </div>
                         <div>
@@ -98,6 +100,7 @@ export default function Dashboard() {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
+            </div>
             <a
               href="https://www.linkedin.com/in/daf2a/"
               target="_blank"
