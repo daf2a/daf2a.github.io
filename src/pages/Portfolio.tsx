@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { PinContainer } from "@/components/ui/3d-pin";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -31,6 +31,26 @@ const loadingStates = [
 export default function Portfolio() {
   const [pins, setPins] = useState<Pin[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const [showMoreStates, setShowMoreStates] = useState<{
+    [key: number]: boolean;
+  }>({});
+
+  const toggleShowMore = (index: number) => {
+    setShowMoreStates((prevStates) => ({
+      ...prevStates,
+      [index]: !prevStates[index],
+    }));
+  };
+
+  const handleDrawerOpenChange = (index: number, isOpen: boolean) => {
+    if (!isOpen) {
+      setShowMoreStates((prevStates) => ({
+        ...prevStates,
+        [index]: false,
+      }));
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +81,7 @@ export default function Portfolio() {
       }
     };
 
-    fetchData()
+    fetchData();
   }, []);
 
   return (
@@ -79,7 +99,10 @@ export default function Portfolio() {
       </div>
       <div className="h-[40rem] w-full flex flex-wrap items-center justify-center gap-x-4 gap-y-4 mt-14 md:p-8 md:scale-100 scale-90">
         {pins.map((pin, index) => (
-          <Drawer key={index}>
+          <Drawer
+            key={index}
+            onOpenChange={(isOpen) => handleDrawerOpenChange(index, isOpen)}
+          >
             <DrawerTrigger asChild>
               <div onClick={() => {}}>
                 <PinContainer title="Click for Details">
@@ -103,16 +126,30 @@ export default function Portfolio() {
               </div>
             </DrawerTrigger>
             <DrawerContent>
-              <div className="container py-24 lg:py-32">
+              <div className="container py-8 md:py-16 lg:py-24">
                 {/* Grid */}
                 <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
                   <div>
                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
                       {pin.name}
                     </h1>
-                    <p className="mt-3 text-xl text-muted-foreground">
+                    <p
+                      className={`mt-3 text-xl text-muted-foreground overflow-hidden ${!showMoreStates[index] ? "overflow-ellipsis line-clamp-3" : ""}`}
+                      ref={descriptionRef}
+                    >
                       {pin.description}
                     </p>
+
+                    {/* Conditional link based on the showMore state for this specific pin */}
+                    {!showMoreStates[index] && pin.description.length > 200 && (
+                      <a
+                        href="#"
+                        className="text-blue-500"
+                        onClick={() => toggleShowMore(index)}
+                      >
+                        Selengkapnya
+                      </a>
+                    )}
                     {/* link pin herf */}
                     <div className="mt-7 grid gap-3 w-full sm:inline-flex">
                       <a

@@ -211,7 +211,7 @@ function App() {
                     This Website Build Using this Framework
                   </DialogTitle>
                   <DialogDescription>
-                    <div className="container py-4 lg:py-16 scale-50 md:scale-100 items-center justify-center">
+                    <div className="container py- lg:py-16 scale-50 md:scale-100 items-center justify-center">
                       <div className="grid sm:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-12">
                         {/* Icon Block */}
                         <div className="text-center">
