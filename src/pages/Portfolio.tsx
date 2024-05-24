@@ -123,7 +123,7 @@ export default function Portfolio() {
               </div>
             </DrawerTrigger>
             <DrawerContent>
-              <div className="container py-8 md:py-16 lg:py-24">
+              <div className="container py-8 md:py-16 lg:pb-24">
                 {/* Grid */}
                 <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
                   <div>
