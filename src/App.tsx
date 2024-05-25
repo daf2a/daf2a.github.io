@@ -24,7 +24,7 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { HiSparkles } from "react-icons/hi2";
 import { FaReact } from "react-icons/fa";
 import { RiNextjsLine } from "react-icons/ri";
-import { SiNotion, SiShadcnui } from "react-icons/si";
+import { SiNotion, SiShadcnui, SiHey } from "react-icons/si";
 import { BiLogoTypescript } from "react-icons/bi";
 import AceternityLogo from "@/assets/logo.png";
 
@@ -35,7 +35,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
 } from "@/components/ui/dialog";
 
 import "./App.css";
@@ -76,23 +75,17 @@ function App() {
           <Dialog open={isDialogVisible} onOpenChange={setIsDialogVisible}>
             <DialogContent className="sm:max-w-md">
               {" "}
-              {/* Center the dialog */}
               <DialogHeader>
-                <DialogTitle>Hi there! 👋</DialogTitle>
                 <DialogDescription>
-                  This website looks even better on a desktop. <br /> Give it a
-                  try! 😉
+                  <div className="py-3 flex gap-4 items-center justify-center text-zinc-400">
+                    <SiHey className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground"/>
+                    <p className="text-left font-semibold">
+                      Hi there. This website looks even better on a desktop, Give it a try!
+                      😉
+                    </p>
+                  </div>
                 </DialogDescription>
               </DialogHeader>
-              <DialogFooter>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setIsDialogVisible(false)}
-                >
-                  Close
-                </Button>
-              </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
