@@ -73,7 +73,7 @@ export default function Background() {
 
       <div className="md:pt-10 mt-8 mx-6">
         <TracingBeam>
-          <div className="max-w-xl md:max-w-3xl mx-auto antialiased pt-4 relative md:px-8 text-left">
+          <div className="max-w-xl md:max-w-3xl -ml-2 md:ml-0 antialiased pt-4 relative md:px-8 text-left">
             {content.map((item, index) => (
               <div key={`content-${index}`} className="mb-10">
                 <h2 className="text-zinc-950 font-bold rounded-full text-sm w-fit px-4 py-1 mb-4 bg-gradient-to-r from-green-600 to-green-400">

@@ -24,7 +24,9 @@ export function HoverBorderGradient({
   } & React.HTMLAttributes<HTMLElement>
 >) {
   const [hovered, setHovered] = useState<boolean>(false);
-  const [direction, setDirection] = useState<Direction>("TOP");
+  const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
+  const randomIndex = Math.floor(Math.random() * directions.length);
+  const [direction, setDirection] = useState<Direction>(directions[randomIndex]);
 
   const rotateDirection = (currentDirection: Direction): Direction => {
     const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];

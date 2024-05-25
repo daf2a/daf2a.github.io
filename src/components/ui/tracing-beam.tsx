@@ -62,7 +62,7 @@ export const TracingBeam = ({
       ref={ref}
       className={cn("relative flex w-full max-w-4xl mx-auto")}
     >
-      <div className="mr-10 md:mr-14 top-3 ">
+      <div className="mr-8 md:mr-14 top-3">
         <motion.div
           transition={{
             duration: 0.2,
@@ -74,7 +74,7 @@ export const TracingBeam = ({
                 ? "none"
                 : "rgba(0, 0, 0, 0) 0px 0px 8px",
           }}
-          className="ml-[26px] h-4 w-4 rounded-full shadow-sm flex items-center justify-center"
+          className="-ml-1 md:ml-[25px] h-4 w-4 rounded-full shadow-sm flex items-center justify-center"
         >
           <motion.div
             transition={{
@@ -94,7 +94,7 @@ export const TracingBeam = ({
           viewBox={`0 0 20 ${svgHeight}`}
           width="20"
           height="100%"
-          className=" ml-5 block fixed"
+          className="-ml-2 md:ml-5 block fixed"
           aria-hidden="true"
         >
           <motion.path

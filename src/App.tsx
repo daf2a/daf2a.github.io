@@ -42,7 +42,7 @@ import "./App.css";
 
 function App() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
-  const isSmallScreen = useMediaQuery('(max-width: 768px)');
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activePage, setActivePage] = useState(1);
 
@@ -80,7 +80,8 @@ function App() {
               <DialogHeader>
                 <DialogTitle>Hi there! 👋</DialogTitle>
                 <DialogDescription>
-                  This website looks even better on a desktop. <br/> Give it a try! 😉
+                  This website looks even better on a desktop. <br /> Give it a
+                  try! 😉
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
@@ -183,17 +184,19 @@ function App() {
                     <span className="sr-only">Daf2a</span>
                   </NavLink>
                 </SheetClose>
-                <NavLink
-                  to="/"
-                  className={
-                    activePage === 1
-                      ? "text-foreground"
-                      : "text-muted-foreground transition-colors hover:text-foreground"
-                  }
-                  onClick={() => setActivePage(1)}
-                >
-                  Dashboard
-                </NavLink>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/"
+                    className={
+                      activePage === 1
+                        ? "text-foreground"
+                        : "text-muted-foreground transition-colors hover:text-foreground"
+                    }
+                    onClick={() => setActivePage(1)}
+                  >
+                    Dashboard
+                  </NavLink>
+                </SheetClose>
                 <SheetClose asChild>
                   <NavLink
                     to="/"
@@ -238,6 +241,17 @@ function App() {
           </Sheet>
           <div className="hidden ml-auto" onClick={toggleTheme}>
             <ModeToggle />
+          </div>
+          <div className="block md:hidden ml-auto mr-2 font-semibold text-lg text-zinc-300">
+            {activePage === 1
+              ? "Dashboard"
+              : activePage === 2
+                ? "Background"
+                : activePage === 3
+                  ? "Portfolio"
+                  : activePage === 4
+                    ? "Gallery"
+                    : "Unknown Page"}
           </div>
           <div className="hidden md:block ml-auto">
             <Dialog>
