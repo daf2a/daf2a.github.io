@@ -30,7 +30,7 @@ export const BackgroundGradient = ({
         transition={
           animate
             ? {
-                duration: 1,
+                duration: 3,
                 repeat: Infinity,
                 repeatType: "loop",
               }
@@ -51,7 +51,7 @@ export const BackgroundGradient = ({
         transition={
           animate
             ? {
-                duration: 1,
+                duration: 3,
                 repeat: Infinity,
                 repeatType: "loop",
               }
