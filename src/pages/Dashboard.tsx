@@ -2,6 +2,7 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import { FlipWords } from "@/components/ui/flip-words";
 import { FaGithub, FaLinkedin, FaUser } from "react-icons/fa";
+import { CgFileDocument } from "react-icons/cg";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { motion } from "framer-motion";
 import ProfilePhoto from "@/assets/photo.jpg";
@@ -176,6 +177,20 @@ export default function Dashboard() {
               >
                 <FaGithub />
                 <span>Github</span>
+              </HoverBorderGradient>
+            </a>
+            <a
+              href="https://daf2a.me/my_cv/main_cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <HoverBorderGradient
+                containerClassName="rounded-full"
+                as="button"
+                className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+              >
+                <CgFileDocument />
+                <span>CV</span>
               </HoverBorderGradient>
             </a>
           </div>
