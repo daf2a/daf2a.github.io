@@ -94,7 +94,7 @@ export default function Portfolio() {
         <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-dot-white/[0.15] bg-dot-black/[0.15] items-center justify-center"></div>
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
       </div>
-      <div className="h-[40rem] w-full flex flex-wrap items-center justify-center gap-x-4 gap-y-4 mt-14 md:p-8 md:scale-100 scale-90">
+      <div className="h-[0rem] w-full flex flex-wrap items-center justify-center gap-x-4 gap-y-4 mt-14 md:p-8 md:scale-100 scale-90">
         {pins.map((pin, index) => (
           <Drawer
             key={index}
