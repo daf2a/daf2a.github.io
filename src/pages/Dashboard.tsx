@@ -190,7 +190,7 @@ export default function Dashboard() {
                 className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
               >
                 <HiDocumentText />
-                <span>CV</span>
+                <span>Resume</span>
               </HoverBorderGradient>
             </a>
           </div>
