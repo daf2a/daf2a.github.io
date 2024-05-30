@@ -49,7 +49,7 @@ export default function Background() {
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         setIsLoading(false);
       }
     };
@@ -63,7 +63,7 @@ export default function Background() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={1500}
+          duration={700}
         />
       )}
       <div className="fixed top-0 -z-50 w-full">
@@ -71,7 +71,7 @@ export default function Background() {
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
       </div>
 
-      <div className="md:pt-10 mt-8 mx-6">
+      <div className="md:pt-10 mt-4 mx-6">
         <TracingBeam>
           <div className="max-w-xl md:max-w-3xl -ml-2 md:ml-0 antialiased pt-4 relative md:px-8 text-left">
             {content.map((item, index) => (

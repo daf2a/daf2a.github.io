@@ -1,6 +1,8 @@
 import Dashboard from "./pages/Dashboard.tsx";
 import Background from "./pages/Background.tsx";
+import Certification from "./pages/Certification.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
+import Blog from "./pages/Blog.tsx";
 import Gallery from "./pages/Gallery.tsx";
 
 import LogoDark from "./assets/d_logo_dark.svg";
@@ -60,8 +62,12 @@ function App() {
       case 2:
         return <Background />;
       case 3:
-        return <Portfolio />;
+        return <Certification />;
       case 4:
+        return <Portfolio />;
+      case 5:
+        return <Blog />;
+      case 6:
         return <Gallery />;
       default:
         return <Dashboard />;
@@ -78,10 +84,10 @@ function App() {
               <DialogHeader>
                 <DialogDescription>
                   <div className="py-3 flex gap-4 items-center justify-center text-zinc-400">
-                    <SiHey className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground"/>
+                    <SiHey className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground" />
                     <p className="text-left font-semibold">
-                      Hi there. This website looks even better on a desktop, Give it a try!
-                      😉
+                      Hi there. This website looks even better on a desktop,
+                      Give it a try! 😉
                     </p>
                   </div>
                 </DialogDescription>
@@ -136,7 +142,7 @@ function App() {
               }
               onClick={() => setActivePage(3)}
             >
-              Portfolio
+              Certification
             </NavLink>
             <NavLink
               to="/"
@@ -146,6 +152,28 @@ function App() {
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
               onClick={() => setActivePage(4)}
+            >
+              Portfolio
+            </NavLink>
+            <NavLink
+              to="/"
+              className={
+                activePage === 5
+                  ? "text-foreground"
+                  : "text-muted-foreground transition-colors hover:text-foreground"
+              }
+              onClick={() => setActivePage(5)}
+            >
+              Blog
+            </NavLink>
+            <NavLink
+              to="/"
+              className={
+                activePage === 6
+                  ? "text-foreground"
+                  : "text-muted-foreground transition-colors hover:text-foreground"
+              }
+              onClick={() => setActivePage(6)}
             >
               Gallery
             </NavLink>
@@ -213,7 +241,7 @@ function App() {
                     }
                     onClick={() => setActivePage(3)}
                   >
-                    Portfolio
+                    Certification
                   </NavLink>
                 </SheetClose>
                 <SheetClose asChild>
@@ -225,6 +253,32 @@ function App() {
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
                     onClick={() => setActivePage(4)}
+                  >
+                    Portfolio
+                  </NavLink>
+                </SheetClose>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/"
+                    className={
+                      activePage === 5
+                        ? "text-foreground"
+                        : "text-muted-foreground transition-colors hover:text-foreground"
+                    }
+                    onClick={() => setActivePage(5)}
+                  >
+                    Blog
+                  </NavLink>
+                </SheetClose>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/"
+                    className={
+                      activePage === 6
+                        ? "text-foreground"
+                        : "text-muted-foreground transition-colors hover:text-foreground"
+                    }
+                    onClick={() => setActivePage(6)}
                   >
                     Gallery
                   </NavLink>
@@ -241,10 +295,14 @@ function App() {
               : activePage === 2
                 ? "Background"
                 : activePage === 3
-                  ? "Portfolio"
+                  ? "Certification"
                   : activePage === 4
-                    ? "Gallery"
-                    : "Unknown Page"}
+                    ? "Portfolio"
+                    : activePage === 5
+                      ? "Blog"
+                      : activePage === 6
+                        ? "Gallery"
+                        : "Unknown Page"}
           </div>
           <div className="hidden md:block ml-auto">
             <Dialog>

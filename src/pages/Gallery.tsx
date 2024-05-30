@@ -49,7 +49,7 @@ export default function Gallery() {
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 1500));
         setIsLoading(false);
       }
     };
@@ -63,7 +63,7 @@ export default function Gallery() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={1500}
+          duration={700}
         />
       )}
       <div className="fixed top-0 -z-50 h-screen w-full">
