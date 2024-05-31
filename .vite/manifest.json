@@ -1,16 +1,22 @@
 {
   "index.html": {
-    "file": "assets/index-Xyo11Cux.js",
+    "file": "assets/index-Csvftrgb.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-CFLEYt4l.css"
+      "assets/index-D1Hu2o7R.css"
     ],
     "assets": [
       "assets/photo-DLOMmmqe.jpg",
+      "assets/dicoding-BnTYBPzC.png",
+      "assets/rubrikgrafis-uCeVKk0G.png",
       "assets/logo-D7p2WCiF.png"
     ]
+  },
+  "src/assets/dicoding.png": {
+    "file": "assets/dicoding-BnTYBPzC.png",
+    "src": "src/assets/dicoding.png"
   },
   "src/assets/logo.png": {
     "file": "assets/logo-D7p2WCiF.png",
@@ -19,5 +25,9 @@
   "src/assets/photo.jpg": {
     "file": "assets/photo-DLOMmmqe.jpg",
     "src": "src/assets/photo.jpg"
+  },
+  "src/assets/rubrikgrafis.png": {
+    "file": "assets/rubrikgrafis-uCeVKk0G.png",
+    "src": "src/assets/rubrikgrafis.png"
   }
 }
