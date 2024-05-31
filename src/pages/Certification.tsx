@@ -4,7 +4,6 @@ import { LuConstruction } from "react-icons/lu";
 import { FaReact, FaGitAlt, FaPython, FaPhp, FaAndroid } from "react-icons/fa";
 import {
   SiCplusplus,
-  SiKotlin,
   SiTypescript,
   SiThreedotjs,
   SiLaravel,
@@ -20,6 +19,7 @@ import {
   SiLatex 
 } from "react-icons/si";
 import { LiaAdobe } from "react-icons/lia";
+import { TbBrandKotlin } from "react-icons/tb";
 
 import Dicoding from "./../assets/dicoding.png";
 import Rubrik from "./../assets/rubrikgrafis.png";
@@ -84,7 +84,7 @@ export default function SkillsAndCertifications() {
     { icon: SiArduino, text: "Arduino" },
     { icon: FaPython, text: "Python" },
     { icon: SiFlask, text: "Flask" },
-    { icon: SiKotlin, text: "Kotlin" },
+    { icon: TbBrandKotlin, text: "Kotlin" },
     { icon: FaAndroid, text: "Android SDK" },
     { icon: FaPhp, text: "PHP" },
     { icon: SiLaravel, text: "Laravel" },
