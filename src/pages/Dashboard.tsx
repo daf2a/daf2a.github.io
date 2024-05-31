@@ -30,7 +30,7 @@ export default function Dashboard() {
         }}
         className="relative flex flex-col justify-center gap-4 px-4 items-center"
       >
-        <div className="flex flex-col justify-center md:h-[40rem] h-full">
+        <div className="flex flex-col justify-center md:h-[45rem] h-full">
           {" "}
           <div className="md:hidden">
             <div className="flex flex-col rounded-3xl items-center justify-center md:gap-16 gap-8 md:max-w-6xl dark:bg-zinc-950  px-4 py-6 md:flex-row md:px-8 md:py-12">
