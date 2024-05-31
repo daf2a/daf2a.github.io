@@ -5,6 +5,7 @@ import { PinContainer } from "@/components/ui/3d-pin";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LuConstruction } from "react-icons/lu";
 
 interface Pin {
   name: string;
@@ -88,7 +89,7 @@ export default function Portfolio() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={700}
+          duration={1000}
         />
       )}
       <div className="fixed top-0 -z-50 h-screen w-full">
@@ -190,8 +191,17 @@ export default function Portfolio() {
             ))}
           </div>
         </TabsContent>
-        <TabsContent value="close" className="justify-center h-[35rem] items-center flex">
-          under construction
+        <TabsContent
+          value="close"
+          className="justify-center h-[35rem] items-center flex"
+        >
+          <div className="py-3 flex gap-4 items-center justify-center text-zinc-400">
+            <LuConstruction className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground" />
+            <p className="text-left font-semibold">
+              This page is currently under construction. Please check back
+              later.
+            </p>
+          </div>
         </TabsContent>
       </Tabs>
     </>

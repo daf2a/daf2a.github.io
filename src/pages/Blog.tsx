@@ -114,7 +114,7 @@ export default function Blog() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   useEffect(() => {
-    setIsDialogVisible(true);
+    setIsDialogVisible(false);
   }, []);
 
   return (

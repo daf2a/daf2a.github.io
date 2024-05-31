@@ -63,7 +63,7 @@ export default function Background() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={700}
+          duration={1000}
         />
       )}
       <div className="fixed top-0 -z-50 w-full">
