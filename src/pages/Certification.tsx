@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { SiAmazonaws, SiScrumalliance, SiGoogle } from "react-icons/si";
 import { useState, useEffect } from "react";
 import { LuConstruction } from "react-icons/lu";
 import { FaReact, FaGitAlt, FaPython, FaPhp, FaAndroid } from "react-icons/fa";
