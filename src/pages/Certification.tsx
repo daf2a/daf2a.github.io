@@ -16,7 +16,10 @@ import {
   SiVuedotjs,
   SiPlatformio,
   SiArduino,
+  SiNotion,
+  SiLatex 
 } from "react-icons/si";
+import { LiaAdobe } from "react-icons/lia";
 
 import Dicoding from "./../assets/dicoding.png";
 import Rubrik from "./../assets/rubrikgrafis.png";
@@ -74,7 +77,7 @@ const Item: React.FC<ItemProps> = ({
   </div>
 );
 
-export default function SkillsAndCertifications() {
+export default function SkillsAndCertifications() {  
   const skills: ItemProps[] = [
     { icon: SiCplusplus, text: "C++" },
     { icon: SiPlatformio, text: "Platformio" },
@@ -94,6 +97,9 @@ export default function SkillsAndCertifications() {
     { icon: FaGitAlt, text: "Git" },
     { icon: SiBlender, text: "Blender" },
     { icon: SiFigma, text: "Figma" },
+    { icon: LiaAdobe, text: "Adobe Family" },
+    { icon: SiNotion, text: "Notion" },
+    { icon: SiLatex, text: "Latex" },
   ];
   const certifications: ItemProps[] = [
     {

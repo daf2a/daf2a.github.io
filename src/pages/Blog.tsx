@@ -89,7 +89,7 @@ function BlogCard({ title, description, date}: BlogPost) {
   return (
     <div className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-8 py-8 mt-4 lg:mt-0">
       <img
-        src={imageUrl} // Use the fetched image URL
+        src={imageUrl} 
         alt="Random Image from Unsplash"
         width={200}
         height={100}
@@ -114,13 +114,13 @@ export default function Blog() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   useEffect(() => {
-    setIsDialogVisible(false);
+    setIsDialogVisible(true);
   }, []);
 
   return (
-    <div className="mx-auto py-4 md:py-12 px-8 md:px-12 lg:px-24 lg:grid lg:grid-cols-2 lg:gap-4">
+    <div className="mx-auto py-4 md:py-12 px-8 md:px-12 lg:px-24 lg:grid lg:grid-cols-2 lg:gap-4 blurred-content">
       {isDialogVisible && (
-        <Dialog open={isDialogVisible}>
+        <Dialog open={isDialogVisible} onOpenChange={setIsDialogVisible}>
           <DialogContent>
             <DialogHeader>
               <DialogDescription>
