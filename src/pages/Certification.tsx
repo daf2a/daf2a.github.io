@@ -106,7 +106,7 @@ export default function SkillsAndCertifications() {
   const certifications: ItemProps[] = [
     {
       icon: Dicoding,
-      text: "Belajar Pengembangan Aplikasi ANdroid Intermediate",
+      text: "Belajar Pengembangan Aplikasi Android Intermediate",
       issuedBy: "Dicoding Academy",
       date: "May 2024",
       link: "https://www.dicoding.com/certificates/KEXL11YG4XG2",
