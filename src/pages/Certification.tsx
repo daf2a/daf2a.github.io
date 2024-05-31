@@ -1,4 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+
 import { useState, useEffect } from "react";
 import { LuConstruction } from "react-icons/lu";
 import { FaReact, FaGitAlt, FaPython, FaPhp, FaAndroid } from "react-icons/fa";
@@ -16,7 +18,7 @@ import {
   SiPlatformio,
   SiArduino,
   SiNotion,
-  SiLatex 
+  SiLatex,
 } from "react-icons/si";
 import { LiaAdobe } from "react-icons/lia";
 import { TbBrandKotlin } from "react-icons/tb";
@@ -57,7 +59,7 @@ const Item: React.FC<ItemProps> = ({
   link,
 }) => (
   <div
-    className={`bg-zinc-900 w-full rounded-lg p-4 flex justify-between space-y-2 ${className}`}
+    className={`bg-zinc-900 w-full rounded-lg p-4 flex justify-between space-y-2 relative ${className}`}
   >
     <div className="flex flex-col">
       {typeof Icon === "string" ? (
@@ -69,15 +71,15 @@ const Item: React.FC<ItemProps> = ({
       {issuedBy && <p className="text-xs text-gray-500">{issuedBy}</p>}
     </div>
     {date && (
-      <div className="bg-zinc-700 text-white rounded-full px-3 py-1 text-xs font-medium self-start">
+      <div className="absolute top-3 right-4 bg-zinc-700 text-white rounded-full px-3 py-1 text-xs font-medium">
         {date}
       </div>
     )}
-      <p className="hidden">{link}</p>
+    <p className="hidden">{link}</p>
   </div>
 );
 
-export default function SkillsAndCertifications() {  
+export default function SkillsAndCertifications() {
   const skills: ItemProps[] = [
     { icon: SiCplusplus, text: "C++" },
     { icon: SiPlatformio, text: "Platformio" },
@@ -223,47 +225,60 @@ export default function SkillsAndCertifications() {
           </DialogContent>
         </Dialog>
       )}
-      <div className="grid grid-cols-1 gap-8 md:gap-12">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">Tech & Skills</h2>
-          <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 md:gap-6 lg:gap-8">
-            {skills.map((skill, index) => (
-              <Item key={index} {...skill} />
-            ))}
+      <motion.div
+        initial={{ opacity: 0.0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.5,
+          ease: "easeInOut",
+        }}
+        className=""
+      >
+        <div className="grid grid-cols-1 gap-8 md:gap-12">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
+              Tech & Skills
+            </h2>
+            <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-4 md:gap-6 lg:gap-8">
+              {skills.map((skill, index) => (
+                <Item key={index} {...skill} />
+              ))}
+            </div>
           </div>
-        </div>
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
-            Certifications
-          </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
-            {certifications.map((cert, index) => (
-              <div key={index}>
-                {cert.link ? (
-                  <a
-                    href={cert.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="no-underline"
-                  >
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
+              Certifications
+            </h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+              {certifications.map((cert, index) => (
+                <div key={index}>
+                  {cert.link ? (
+                    <a
+                      href={cert.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="no-underline"
+                    >
+                      <Card>
+                        <CardContent className="p-4 md:p-6 flex items-center justify-between">
+                          <Item {...cert} />
+                        </CardContent>
+                      </Card>
+                    </a>
+                  ) : (
                     <Card>
                       <CardContent className="p-4 md:p-6 flex items-center justify-between">
                         <Item {...cert} />
                       </CardContent>
                     </Card>
-                  </a>
-                ) : (
-                  <Card>
-                    <CardContent className="p-4 md:p-6 flex items-center justify-between">
-                      <Item {...cert} />
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
