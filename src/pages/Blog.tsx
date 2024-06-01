@@ -134,7 +134,7 @@ function Blog() {
             <Button
               onClick={handleBackClick}
               variant="outline"
-              className="mb-4 -mt-4 sticky top-20 left-4"
+              className="mb-4 -mt-4 sticky top-12 md:top-20 left-2 md:left-4"
             >
               Back to Blog List
             </Button>
