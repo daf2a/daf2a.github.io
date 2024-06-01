@@ -130,7 +130,7 @@ function Blog() {
           }}
           className=""
         >
-          <div className="p-8 item-left text-left flex flex-col items-end bg-zinc-200 h-screen relative">
+          <div className="p-8 item-left text-left flex flex-col items-end bg-zinc-200 relative mx-4 md:mx-8">
             <Button
               onClick={handleBackClick}
               variant="outline"
