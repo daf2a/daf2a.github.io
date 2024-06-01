@@ -26,7 +26,7 @@ const loadingStates = [
     text: "Building the Blog",
   },
   {
-    text: "Blog page is too large, maybe it takes a while",
+    text: "Maybe it takes a while...",
   },
 ];
 
@@ -100,7 +100,7 @@ function Blog() {
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 4000));
         setIsLoading(false);
       }
     };
@@ -135,8 +135,8 @@ function Blog() {
                 <div className="py-3 flex gap-4 items-center justify-center text-zinc-400">
                   <LuConstruction className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground" />
                   <p className="text-left font-semibold">
-                    This page is just dekstop site only. Please check back later
-                    😔
+                    For now, this page is just dekstop site only 😔<br/>
+                    You still can view the blog but it's not responsive yet.
                   </p>
                 </div>
               </DialogDescription>
