@@ -26,7 +26,7 @@ const loadingStates = [
     text: "Building the Blog",
   },
   {
-    text: "Adding finishing touches",
+    text: "Blog page is too large, maybe it takes a while",
   },
 ];
 
@@ -147,7 +147,7 @@ function Blog() {
         <Loader
           loadingStates={loadingStates}
           loading={isLoading}
-          duration={1000}
+          duration={2000}
         />
       )}
       {selectedBlog ? (
