@@ -8,6 +8,15 @@ import "prismjs/themes/prism-tomorrow.css";
 import { NotionRenderer } from "react-notion";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { LuConstruction } from "react-icons/lu";
+import { useMediaQuery } from "@uidotdev/usehooks";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+} from "@/components/ui/dialog";
 
 const loadingStates = [
   {
@@ -70,6 +79,12 @@ function Blog() {
   const [data, setData] = useState<Blog[]>([]);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
+
+  useEffect(() => {
+    setIsDialogVisible(true);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,6 +127,22 @@ function Blog() {
 
   return (
     <>
+      {isDialogVisible && isSmallScreen && (
+        <Dialog open={isDialogVisible} onOpenChange={setIsDialogVisible}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogDescription>
+                <div className="py-3 flex gap-4 items-center justify-center text-zinc-400">
+                  <LuConstruction className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground" />
+                  <p className="text-left font-semibold">
+                    This page is just dekstop site only. Please check back later 😔
+                  </p>
+                </div>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
       {isLoading && (
         <Loader
           loadingStates={loadingStates}
