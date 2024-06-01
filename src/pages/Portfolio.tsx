@@ -195,7 +195,7 @@ export default function Portfolio() {
           value="close"
           className="justify-center h-[35rem] items-center flex"
         >
-          <div className="py-3 flex gap-4 items-center justify-center text-zinc-400 mx-6">
+          <div className="py-3 md:mt-0 -mt-8 flex gap-4 items-center justify-center text-zinc-400 mx-6">
             <LuConstruction className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground" />
             <p className="text-left font-semibold">
               This page is currently under construction. Please check back
