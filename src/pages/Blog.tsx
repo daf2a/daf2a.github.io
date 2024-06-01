@@ -135,7 +135,8 @@ function Blog() {
                 <div className="py-3 flex gap-4 items-center justify-center text-zinc-400">
                   <LuConstruction className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground" />
                   <p className="text-left font-semibold">
-                    This page is just dekstop site only. Please check back later 😔
+                    This page is just dekstop site only. Please check back later
+                    😔
                   </p>
                 </div>
               </DialogDescription>
@@ -165,11 +166,11 @@ function Blog() {
             <Button
               onClick={handleBackClick}
               variant="outline"
-              className="mb-4 -mt-4 sticky top-12 md:top-20 left-2 md:left-4"
+              className="mb-4 -mt-4 sticky top-20 md:left-4 left-2"
             >
               Back to Blog List
             </Button>
-            <div className="self-start">
+            <div className="self-start text-wrap overflow-auto">
               <NotionRenderer blockMap={selectedBlog.properties} />
             </div>
           </div>

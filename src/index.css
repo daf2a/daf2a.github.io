@@ -89,5 +89,9 @@
 .notion-renderer-force-color h4,
 .notion-renderer-force-color h5,
 .notion-renderer-force-color h6 {
-  color: var(--zinc-200) !important;
+    overflow-wrap: break-word;
+}
+
+.notion-renderer-force-color img {
+    max-width: 100%;
 }
