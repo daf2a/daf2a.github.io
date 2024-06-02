@@ -89,8 +89,8 @@ function PortfolioCard({
           })}
         </div>
         <p className="text-gray-500 dark:text-gray-400 text-sm">
-          {description.length > 120
-            ? description.substring(0, 120) + "..."
+          {description.length > 100
+            ? description.substring(0, 100) + "..."
             : description}
         </p>
         <div className="hidden items-center text-xs text-gray-500 dark:text-gray-400">
