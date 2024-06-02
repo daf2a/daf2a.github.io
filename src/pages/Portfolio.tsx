@@ -54,7 +54,7 @@ function PortfolioCard({
 
   return (
     <div
-      className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-6 py-6 md:py-2 mt-4 lg:mt-0 cursor-pointer bg-zinc-950"
+      className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-6 py-6 md:py-2 mt-4 lg:mt-0 cursor-pointer bg-zinc-950 hover:bg-zinc-900"
       onClick={onClick}
     >
       {!isImageLoaded && (
@@ -121,7 +121,9 @@ export default function Portfolio(): ReactElement {
         if (response.status !== 200) {
           throw new Error("Notion API request failed");
         }
-        setData(response.data);
+        
+        const sortedData = sortByDate(response.data);
+        setData(sortedData);
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
@@ -131,6 +133,10 @@ export default function Portfolio(): ReactElement {
 
     fetchData();
   }, []);
+
+  const sortByDate = (data: Portfolio[]): Portfolio[] => {
+    return data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  };
 
   const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {

@@ -77,7 +77,9 @@ function Blog() {
         if (response.status !== 200) {
           throw new Error("Notion API request failed");
         }
-        setData(response.data);
+        
+        const sortedData = sortByDate(response.data);
+        setData(sortedData);
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
@@ -87,6 +89,10 @@ function Blog() {
 
     fetchData();
   }, []);
+
+  const sortByDate = (data: Blog[]): Blog[] => {
+    return data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  };
 
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -110,7 +116,7 @@ function Blog() {
       <AnimatePresence>
         {isLoading && (
           <motion.div
-            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
+            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950 hover:bg-zinc-900"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
