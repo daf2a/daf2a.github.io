@@ -234,7 +234,7 @@ export default function Portfolio(): ReactElement {
               </div>
             </TabsContent>
             <TabsContent value="close">
-              <div className="py-4 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
+              <div className="py-4 -mt-2 md:mt-0 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
                 {data
                   .filter((portfolio) => portfolio.type === "close")
                   .map((portfolio) => (
