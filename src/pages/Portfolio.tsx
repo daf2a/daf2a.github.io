@@ -212,7 +212,7 @@ export default function Portfolio(): ReactElement {
                 Open Project
               </TabsTrigger>
               <TabsTrigger value="close" className="w-1/2 mx-4">
-                Close Project
+                Private Project
               </TabsTrigger>
             </TabsList>
             <TabsContent value="open">
