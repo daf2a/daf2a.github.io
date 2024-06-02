@@ -30,7 +30,7 @@ function BlogCard({ title, description, date, image, onClick }: BlogPost) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   return (
     <div
-      className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-6 py-6 md:py-2 mt-4 lg:mt-0 cursor-pointer"
+      className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-6 py-6 md:py-2 mt-4 lg:mt-0 cursor-pointer hover:bg-zinc-900"
       onClick={onClick}
     >
       {!isImageLoaded && (
@@ -116,7 +116,7 @@ function Blog() {
       <AnimatePresence>
         {isLoading && (
           <motion.div
-            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950 hover:bg-zinc-900"
+            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
