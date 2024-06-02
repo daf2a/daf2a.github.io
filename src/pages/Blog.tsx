@@ -140,10 +140,10 @@ function Blog() {
           className=""
         >
           <div className="p-8 md:p-16 item-left text-left bg-zinc-200 relative">
-            <Button
+          <Button
               onClick={handleBackClick}
               variant="outline"
-              className="mb-4 -mt-4 sticky top-20 md:left-4 left-2"
+              className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8 lg:bottom-16 lg:right-16 bg-zinc-800 text-zinc-100 border-zinc-200 hover:bg-zinc-600"
             >
               Back to Blog List
             </Button>
