@@ -1,19 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { TracingBeam } from "@/components/ui/tracing-beam";
-
-const loadingStates = [
-  {
-    text: "Fetching data from Notion",
-  },
-  {
-    text: "Building the background",
-  },
-  {
-    text: "Adding finishing touches",
-  },
-];
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface BackgroundItem {
   name: string;
@@ -25,6 +14,7 @@ interface BackgroundItem {
 export default function Background() {
   const [content, setContent] = useState<BackgroundItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadedImages, setLoadedImages] = useState<boolean[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,10 +36,10 @@ export default function Background() {
         }));
 
         setContent(transformedContent);
+        setLoadedImages(new Array(transformedContent.length).fill(false));
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
         setIsLoading(false);
       }
     };
@@ -57,15 +47,31 @@ export default function Background() {
     fetchData();
   }, []);
 
+  const handleImageLoad = (index: number) => {
+    setLoadedImages((prevLoadedImages) => {
+      const newLoadedImages = [...prevLoadedImages];
+      newLoadedImages[index] = true;
+      return newLoadedImages;
+    });
+  };
+
   return (
     <>
-      {isLoading && (
-        <Loader
-          loadingStates={loadingStates}
-          loading={isLoading}
-          duration={1000}
-        />
-      )}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+            <p className="text-zinc-400 text-sm mt-6">
+              Fetching data from Notion...
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="fixed top-0 -z-50 w-full">
         <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-grid-small-white/[0.15] bg-grid-small-black/[0.15] items-center justify-center"></div>
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
@@ -80,18 +86,31 @@ export default function Background() {
                   {item.title}
                 </h2>
 
-                <p className="text-xl mb-4 text-left font-semibold">{item.name}</p>
+                <p className="text-xl mb-4 text-left font-semibold">
+                  {item.name}
+                </p>
                 <div className="text-sm prose prose-sm dark:prose-invert text-slate-300">
                   {item?.img && (
-                    <img
-                      src={item.img}
-                      alt="blog thumbnail"
-                      style={{
-                        width: "400px",
-                        height: "200px",
-                      }}
-                      className="rounded-lg object-cover border-gray-200/50 dark:border-gray-800/50 border-4"
-                    />
+                    <>
+                      {!loadedImages[index] && (
+                        <Skeleton className="w-[400px] h-[200px] rounded-lg" />
+                      )}
+                      <img
+                        src={item.img}
+                        alt="blog thumbnail"
+                        style={{
+                          width: "400px",
+                          height: "200px",
+                          display: loadedImages[index] ? "block" : "none",
+                        }}
+                        className="rounded-lg object-cover border-gray-200/50 dark:border-gray-800/50 border-4"
+                        onLoad={() => handleImageLoad(index)}
+                        onError={(e) => {
+                          e.currentTarget.src = "/placeholder.svg";
+                          handleImageLoad(index);
+                        }}
+                      />
+                    </>
                   )}
                   <p className="mt-4 text-left">{item.description}</p>
                 </div>

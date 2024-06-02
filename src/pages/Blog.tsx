@@ -1,25 +1,13 @@
 import { BsCalendarDate } from "react-icons/bs";
-import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { useEffect, useState } from "react";
 import { BlockMapType } from "react-notion";
 import axios from "axios";
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import { NotionRenderer } from "react-notion";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
-const loadingStates = [
-  {
-    text: "Fetching data from Notion",
-  },
-  {
-    text: "Building the Blog",
-  },
-  {
-    text: "Maybe it takes a while...",
-  },
-];
+import { Skeleton } from "@/components/ui/skeleton";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface BlogPost {
   title: string;
@@ -34,23 +22,31 @@ interface Blog {
   title: string;
   deskripsi: string;
   img_url: string;
-  created_time: string;
+  date: string;
   properties: BlockMapType;
 }
 
 function BlogCard({ title, description, date, image, onClick }: BlogPost) {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   return (
     <div
-      className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-8 py-8 mt-4 lg:mt-0 cursor-pointer"
+      className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-6 py-6 md:py-2 mt-4 lg:mt-0 cursor-pointer"
       onClick={onClick}
     >
+      {!isImageLoaded && (
+        <Skeleton className="w-full sm:w-[30%] h-[110px] rounded-lg" />
+      )}
       <img
         src={image || "/placeholder.svg"}
         alt="Blog Image"
         width={200}
-        height={100}
-        className="w-full sm:w-[30%] rounded-lg object-cover bg-zinc-900"
-        onError={(e) => (e.currentTarget.src = "/placeholder.svg")} // Error handling
+        height={110}
+        className={`w-full sm:w-[30%] h-[110px] rounded-lg object-cover bg-zinc-900 ${isImageLoaded ? "block" : "hidden"}`}
+        onLoad={() => setIsImageLoaded(true)}
+        onError={(e) => {
+          e.currentTarget.src = "/placeholder.svg";
+          setIsImageLoaded(true);
+        }}
       />
       <div className="space-y-1 w-full sm:w-[70%] md:p-4">
         <h2 className="text-lg font-semibold">{title}</h2>
@@ -85,7 +81,6 @@ function Blog() {
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 4000));
         setIsLoading(false);
       }
     };
@@ -112,13 +107,21 @@ function Blog() {
 
   return (
     <>
-      {isLoading && (
-        <Loader
-          loadingStates={loadingStates}
-          loading={isLoading}
-          duration={2000}
-        />
-      )}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+            <p className="text-zinc-400 text-sm mt-6">
+              Fetching data from Notion...
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {selectedBlog ? (
         <motion.div
           initial={{ opacity: 0.0, y: 40 }}
@@ -150,7 +153,7 @@ function Blog() {
               key={blog.id}
               title={blog.title}
               description={blog.deskripsi}
-              date={formatDate(blog.created_time)}
+              date={formatDate(blog.date)}
               image={blog.img_url}
               onClick={() => handleCardClick(blog)}
             />

@@ -1,19 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-
-const loadingStates = [
-  {
-    text: "Fetching data from Notion",
-  },
-  {
-    text: "Building the gallery",
-  },
-  {
-    text: "Adding finishing touches",
-  },
-];
+import { motion, AnimatePresence } from "framer-motion";
 
 interface GalleryItem {
   name: string;
@@ -49,7 +37,6 @@ export default function Gallery() {
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
         setIsLoading(false);
       }
     };
@@ -59,13 +46,21 @@ export default function Gallery() {
 
   return (
     <>
-      {isLoading && (
-        <Loader
-          loadingStates={loadingStates}
-          loading={isLoading}
-          duration={1000}
-        />
-      )}
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+            <p className="text-zinc-400 text-sm mt-6">
+              Fetching data from Notion...
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="fixed top-0 -z-50 h-screen w-full">
         <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-grid-white/[0.05] bg-grid-black/[0.05] items-center justify-center"></div>
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>

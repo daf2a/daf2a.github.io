@@ -90,7 +90,6 @@ export const DirectionAwareHover = ({
                 "object-cover scale-[1.15] w-full h-full",
                 imageClassName
               )}
-              loading="lazy"
             />
           </motion.div>
           <motion.div

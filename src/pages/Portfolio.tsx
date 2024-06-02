@@ -1,55 +1,115 @@
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
-import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
-import { PinContainer } from "@/components/ui/3d-pin";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import { useState, useEffect, ReactElement } from "react";
+import { BlockMapType } from "react-notion";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LuConstruction } from "react-icons/lu";
+import { BsCalendarDate } from "react-icons/bs";
+import { Skeleton } from "@/components/ui/skeleton";
+import { NotionRenderer } from "react-notion";
+import "react-notion/src/styles.css";
+import "prismjs/themes/prism-tomorrow.css";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface Pin {
-  name: string;
-  description: string;
+interface PortfolioPost {
   title: string;
-  href: string;
-  img: string;
+  description: string;
+  date: string;
+  image: string;
+  type: string;
+  techstack: string;
+  onClick: () => void;
 }
 
-const loadingStates = [
-  {
-    text: "Fetching data from Notion",
-  },
-  {
-    text: "Building the portfolio",
-  },
-  {
-    text: "Adding finishing touches",
-  },
-];
+interface Portfolio {
+  id: string;
+  title: string;
+  deskripsi: string;
+  img_url: string;
+  date: string;
+  type: string;
+  techstack: string;
+  properties: BlockMapType;
+}
 
-export default function Portfolio() {
-  const [pins, setPins] = useState<Pin[]>([]);
+function PortfolioCard({
+  title,
+  description,
+  date,
+  image,
+  type,
+  techstack,
+  onClick,
+}: PortfolioPost): ReactElement {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const colorPairs = [
+    { text: "text-green-100", bg: "bg-green-900/40" },
+    { text: "text-cyan-100", bg: "bg-cyan-900/40" },
+    { text: "text-blue-100", bg: "bg-blue-900/40" },
+    { text: "text-red-100", bg: "bg-red-900/40" },
+    { text: "text-yellow-100", bg: "bg-yellow-900/40" },
+    { text: "text-indigo-100", bg: "bg-indigo-900/40" },
+    { text: "text-purple-100", bg: "bg-purple-900/40" },
+    { text: "text-pink-100", bg: "bg-pink-900/40" },
+  ];
+
+  return (
+    <div
+      className="flex flex-col sm:flex-row items-center text-left gap-4 rounded-lg shadow-sm dark:border px-6 py-6 md:py-2 mt-4 lg:mt-0 cursor-pointer bg-zinc-950"
+      onClick={onClick}
+    >
+      {!isImageLoaded && (
+        <Skeleton className="w-full sm:w-[30%] h-[110px] rounded-lg" />
+      )}
+      <img
+        src={image || "/placeholder.svg"}
+        alt="Blog Image"
+        width={200}
+        height={110}
+        className={`w-full sm:w-[30%] h-[110px] rounded-lg object-cover bg-zinc-900 ${isImageLoaded ? "block" : "hidden"}`}
+        onLoad={() => setIsImageLoaded(true)}
+        onError={(e) => {
+          e.currentTarget.src = "/placeholder.svg";
+          setIsImageLoaded(true);
+        }}
+      />
+      <div className="space-y-1 w-full sm:w-[70%] md:p-4">
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <div className="flex flex-wrap gap-2 mt-2">
+          {techstack.split(",").map((tech, index) => {
+            const colorPair =
+              colorPairs[Math.floor(Math.random() * colorPairs.length)];
+            return (
+              <span
+                key={index}
+                className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${colorPair.text} ${colorPair.bg} mr-1`}
+              >
+                {tech.trim()}
+              </span>
+            );
+          })}
+        </div>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
+          {description.length > 120
+            ? description.substring(0, 120) + "..."
+            : description}
+        </p>
+        <div className="hidden items-center text-xs text-gray-500 dark:text-gray-400">
+          <BsCalendarDate className="mr-1 h-3 w-3" />
+          <span>Published on {date}</span>
+          <span>type {type}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Portfolio(): ReactElement {
+  const [data, setData] = useState<Portfolio[]>([]);
+  const [selectedPortfolio, setSelectedPortfolio] = useState<Portfolio | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const [showMoreStates, setShowMoreStates] = useState<{
-    [key: number]: boolean;
-  }>({});
-
-  const toggleShowMore = (index: number) => {
-    setShowMoreStates((prevStates) => ({
-      ...prevStates,
-      [index]: !prevStates[index],
-    }));
-  };
-
-  const handleDrawerOpenChange = (index: number, isOpen: boolean) => {
-    if (!isOpen) {
-      setShowMoreStates((prevStates) => ({
-        ...prevStates,
-        [index]: false,
-      }));
-    }
-  };
+  const [activeTab, setActiveTab] = useState("open"); // State untuk menyimpan tab aktif
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,21 +121,10 @@ export default function Portfolio() {
         if (response.status !== 200) {
           throw new Error("Notion API request failed");
         }
-
-        const data = response.data;
-        const transformedPins = data.map((item: any) => ({
-          name: item.name,
-          title: item.title,
-          description: item.description,
-          href: item.href,
-          img: item.img,
-        }));
-
-        setPins(transformedPins);
+        setData(response.data);
       } catch (error) {
         console.error("Error fetching Notion data:", error);
       } finally {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
         setIsLoading(false);
       }
     };
@@ -83,127 +132,122 @@ export default function Portfolio() {
     fetchData();
   }, []);
 
+  const formatDate = (dateString: string): string => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const handleCardClick = (portfolio: Portfolio): void => {
+    setSelectedPortfolio(portfolio);
+  };
+
+  const handleBackClick = (): void => {
+    setSelectedPortfolio(null);
+  };
+
   return (
     <>
-      {isLoading && (
-        <Loader
-          loadingStates={loadingStates}
-          loading={isLoading}
-          duration={1000}
-        />
-      )}
-      <div className="fixed top-0 -z-50 h-screen w-full">
-        <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-dot-white/[0.15] bg-dot-black/[0.15] items-center justify-center"></div>
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
-      </div>
-      <Tabs defaultValue="open" className="w-full md:mt-6">
-        <TabsList className="rounded-none w-full md:w-10/12">
-          <TabsTrigger value="open" className="w-1/2 mx-4">
-            Open Project
-          </TabsTrigger>
-          <TabsTrigger value="close" className="w-1/2 mx-4">
-            Close Project
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="open">
-          <div className="h-[0rem] w-full flex flex-wrap items-center justify-center gap-x-4 gap-y-4 mt-4 p-8 md:scale-100 scale-90">
-            {pins.map((pin, index) => (
-              <Drawer
-                key={index}
-                onOpenChange={(isOpen) => handleDrawerOpenChange(index, isOpen)}
-              >
-                <DrawerTrigger asChild>
-                  <div onClick={() => {}}>
-                    <PinContainer title="Click for Details">
-                      <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[16rem]">
-                        <div
-                          className="flex flex-1 w-full rounded-lg bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500"
-                          style={{
-                            backgroundImage: `url(${pin.img})`,
-                            backgroundSize: "cover",
-                            backgroundPosition: "center",
-                          }}
-                        />
-                        <h3 className="max-w-xs !pb-2 mt-4 font-bold text-base text-slate-100">
-                          {pin.name}
-                        </h3>
-                        <div className="text-base !m-0 !p-0 font-normal">
-                          <span className="text-slate-500 ">{pin.title}</span>
-                        </div>
-                      </div>
-                    </PinContainer>
-                  </div>
-                </DrawerTrigger>
-                <DrawerContent>
-                  <div className="container py-8 md:py-16 lg:pb-24">
-                    {/* Grid */}
-                    <div className="grid md:grid-cols-2 gap-4 md:gap-8 xl:gap-20 md:items-center">
-                      <div>
-                        <h1 className="scroll-m-20 text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl">
-                          {pin.name}
-                        </h1>
-                        <p
-                          className={`mt-3 text-base md:text-xl text-muted-foreground overflow-hidden ${!showMoreStates[index] ? "overflow-ellipsis line-clamp-3" : ""}`}
-                          ref={descriptionRef}
-                        >
-                          {pin.description}
-                        </p>
-
-                        {/* Conditional link based on the showMore state for this specific pin */}
-                        {!showMoreStates[index] &&
-                          pin.description.length > 200 && (
-                            <a
-                              href="#"
-                              className="text-blue-500"
-                              onClick={() => toggleShowMore(index)}
-                            >
-                              Read more
-                            </a>
-                          )}
-                        {/* link pin herf */}
-                        <div className="mt-7 grid gap-3 w-full sm:inline-flex">
-                          <a
-                            href={pin.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-center shadow-[0_0_0_3px_#000000_inset] px-6 py-2 bg-transparent border border-black dark:border-white dark:text-white text-black rounded-lg font-bold transform hover:-translate-y-1 transition duration-400"
-                          >
-                            Link to Project
-                          </a>
-                        </div>
-                      </div>
-                      {/* Col image 800x 600" */}
-                      <div className="relative">
-                        <AspectRatio ratio={5 / 3}>
-                          <img
-                            className="object-cover w-full h-full rounded-lg border-4 md:border- border-gray-200/50 dark:border-gray-800/50"
-                            src={pin.img}
-                            alt="Image Description"
-                          />
-                        </AspectRatio>
-                      </div>
-                      {/* End Col */}
-                    </div>
-                    {/* End Grid */}
-                  </div>
-                </DrawerContent>
-              </Drawer>
-            ))}
-          </div>
-        </TabsContent>
-        <TabsContent
-          value="close"
-          className="justify-center h-[35rem] items-center flex"
-        >
-          <div className="py-3 md:mt-0 -mt-8 flex gap-4 items-center justify-center text-zinc-400 mx-6">
-            <LuConstruction className="text-zinc-400 flex-shrink-0 w-16 h-16 text-primary-foreground" />
-            <p className="text-left font-semibold">
-              This page is currently under construction. Please check back
-              later.
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+            <p className="text-zinc-400 text-sm mt-6">
+              Fetching data from Notion...
             </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {selectedPortfolio ? (
+        <motion.div
+          initial={{ opacity: 0.0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.3,
+            duration: 0.5,
+            ease: "easeInOut",
+          }}
+          className=""
+        >
+          <div className="p-8 md:p-16 item-left text-left bg-zinc-200 relative">
+            <Button
+              onClick={handleBackClick}
+              variant="outline"
+              className="mb-4 -mt-4 sticky top-20 md:left-4 left-2"
+            >
+              Back to Project List
+            </Button>
+            <div className="self-start">
+              <NotionRenderer blockMap={selectedPortfolio.properties} />
+            </div>
           </div>
-        </TabsContent>
-      </Tabs>
+        </motion.div>
+      ) : (
+        <>
+          <div className="fixed top-0 -z-50 h-screen w-full">
+            <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-dot-white/[0.15] bg-dot-black/[0.15] items-center justify-center"></div>
+            <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
+          </div>
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full md:mt-6 md:w-10/12 items-center justify-center mx-auto"
+          >
+            <TabsList className="rounded-none w-full">
+              <TabsTrigger value="open" className="w-1/2 mx-4">
+                Open Project
+              </TabsTrigger>
+              <TabsTrigger value="close" className="w-1/2 mx-4">
+                Close Project
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="open">
+              <div className="py-4 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
+                {data
+                  .filter((portfolio) => portfolio.type === "open")
+                  .map((portfolio) => (
+                    <PortfolioCard
+                      key={portfolio.id}
+                      title={portfolio.title}
+                      description={portfolio.deskripsi}
+                      date={formatDate(portfolio.date)}
+                      image={portfolio.img_url}
+                      type={portfolio.type}
+                      techstack={portfolio.techstack}
+                      onClick={() => handleCardClick(portfolio)}
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="close">
+              <div className="py-4 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
+                {data
+                  .filter((portfolio) => portfolio.type === "close")
+                  .map((portfolio) => (
+                    <PortfolioCard
+                      key={portfolio.id}
+                      title={portfolio.title}
+                      description={portfolio.deskripsi}
+                      date={formatDate(portfolio.date)}
+                      image={portfolio.img_url}
+                      type={portfolio.type}
+                      techstack={portfolio.techstack}
+                      onClick={() => handleCardClick(portfolio)}
+                    />
+                  ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </>
+      )}
     </>
   );
 }
