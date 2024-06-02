@@ -93,7 +93,7 @@ export default function Background() {
                   {item?.img && (
                     <>
                       {!loadedImages[index] && (
-                        <Skeleton className="w-[400px] h-[200px] rounded-lg md:scale-100 scale-50" />
+                        <Skeleton className="w-[400px] h-[200px] rounded-lg" />
                       )}
                       <img
                         src={item.img}
