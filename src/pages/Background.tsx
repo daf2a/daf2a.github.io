@@ -93,17 +93,14 @@ export default function Background() {
                   {item?.img && (
                     <>
                       {!loadedImages[index] && (
-                        <Skeleton className="w-[400px] h-[200px] rounded-lg" />
+                        <Skeleton className="w-full h-48 md:w-[400px] md:h-[200px] rounded-lg" />
                       )}
                       <img
                         src={item.img}
                         alt="blog thumbnail"
-                        style={{
-                          width: "400px",
-                          height: "200px",
-                          display: loadedImages[index] ? "block" : "none",
-                        }}
-                        className="rounded-lg object-cover border-gray-200/50 dark:border-gray-800/50 border-4"
+                        className={`rounded-lg object-cover border-gray-200/50 dark:border-gray-800/50 border-4 ${
+                          loadedImages[index] ? "block" : "hidden"
+                        } w-full h-48 md:w-[400px] md:h-[200px]`}
                         onLoad={() => handleImageLoad(index)}
                         onError={(e) => {
                           e.currentTarget.src = "/placeholder.svg";
