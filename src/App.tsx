@@ -37,7 +37,7 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
-    setIsDialogVisible(true);
+    setIsDialogVisible(false);
   }, []);
 
   const toggleTheme = () => {
