@@ -1,23 +1,77 @@
 // src/pages/BlogItem.tsx
-import React, { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { NotionRenderer, BlockMapType } from "react-notion";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+
+interface Blog {
+  id: string;
+  title: string;
+  deskripsi: string;
+  img_url: string;
+  date: string;
+  properties: BlockMapType;
+}
 
 const BlogItem: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { id } = useParams<{ id: string }>();
   const { state } = location;
 
-  const blog = state?.blog;
+  const [blog, setBlog] = useState<Blog | null>(state?.blog || null);
+  const [isLoading, setIsLoading] = useState(!blog);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    if (!blog) {
+      fetchBlogData(id);
+    }
+  }, [id, blog]);
+
+  const fetchBlogData = async (blogId: string | undefined) => {
+    if (!blogId) return;
+
+    try {
+      const response = await axios.get("https://be-daf2a.vercel.app/api/notion-blog");
+      if (response.status !== 200) {
+        throw new Error("Notion API request failed");
+      }
+      const blogData = response.data.find((item: Blog) => item.id === blogId);
+      setBlog(blogData);
+    } catch (error) {
+      console.error("Error fetching Notion data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <AnimatePresence>
+        {isLoading && (
+          <motion.div
+            className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
+            <p className="text-zinc-400 text-sm mt-6">
+              Fetching data from Notion...
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
+  }
 
   if (!blog) {
-    return <div>Blog post not found.</div>;
+    return (
+      <div className="py-8 text-zinc-300">Blog post not found.</div>
+    );
   }
 
   return (
