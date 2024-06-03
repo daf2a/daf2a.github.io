@@ -1,11 +1,12 @@
+// src/pages/Portfolio.tsx
 import axios from "axios";
 import { useState, useEffect, ReactElement } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { BlockMapType } from "react-notion";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BsCalendarDate } from "react-icons/bs";
 import { Skeleton } from "@/components/ui/skeleton";
-import { NotionRenderer } from "react-notion";
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import { motion, AnimatePresence } from "framer-motion";
@@ -105,11 +106,11 @@ function PortfolioCard({
 
 export default function Portfolio(): ReactElement {
   const [data, setData] = useState<Portfolio[]>([]);
-  const [selectedPortfolio, setSelectedPortfolio] = useState<Portfolio | null>(
-    null
-  );
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("open"); // State untuk menyimpan tab aktif
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isPortfolioRoute = location.pathname === "/portfolio";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -121,7 +122,7 @@ export default function Portfolio(): ReactElement {
         if (response.status !== 200) {
           throw new Error("Notion API request failed");
         }
-        
+
         const sortedData = sortByDate(response.data);
         setData(sortedData);
       } catch (error) {
@@ -135,7 +136,9 @@ export default function Portfolio(): ReactElement {
   }, []);
 
   const sortByDate = (data: Portfolio[]): Portfolio[] => {
-    return data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return data.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
   };
 
   const formatDate = (dateString: string): string => {
@@ -148,17 +151,13 @@ export default function Portfolio(): ReactElement {
   };
 
   const handleCardClick = (portfolio: Portfolio): void => {
-    setSelectedPortfolio(portfolio);
-  };
-
-  const handleBackClick = (): void => {
-    setSelectedPortfolio(null);
+    navigate(`${portfolio.type}/${portfolio.id}`, { state: { portfolio } });
   };
 
   return (
-    <>
+    <div>
       <AnimatePresence>
-        {isLoading && (
+        {isLoading && isPortfolioRoute && (
           <motion.div
             className="fixed top-0 left-0 z-50 w-full h-full flex flex-col items-center justify-center bg-white dark:bg-zinc-950"
             initial={{ opacity: 1 }}
@@ -172,88 +171,63 @@ export default function Portfolio(): ReactElement {
           </motion.div>
         )}
       </AnimatePresence>
-      {selectedPortfolio ? (
-        <motion.div
-          initial={{ opacity: 0.0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.3,
-            duration: 0.5,
-            ease: "easeInOut",
-          }}
-          className=""
+      <div className="fixed top-0 -z-50 h-screen w-full">
+        <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-dot-white/[0.15] bg-dot-black/[0.15] items-center justify-center"></div>
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
+      </div>
+      {isPortfolioRoute && (
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="w-full md:mt-6 md:w-10/12 items-center justify-center mx-auto"
         >
-          <div className="p-8 md:p-16 item-left text-left bg-zinc-200 min-h-screen relative">
-            <Button
-              onClick={handleBackClick}
-              variant="outline"
-              className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8 lg:bottom-16 lg:right-16 bg-zinc-800 text-zinc-100 border-zinc-200 hover:bg-zinc-600"
-            >
-              Back to Project List
-            </Button>
-            <div className="self-start">
-              <NotionRenderer blockMap={selectedPortfolio.properties} />
+          <TabsList className="rounded-none w-full">
+            <TabsTrigger value="open" className="w-1/2 mx-4">
+              Open Project
+            </TabsTrigger>
+            <TabsTrigger value="close" className="w-1/2 mx-4">
+              Private Project
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="open">
+            <div className="py-4 -mt-2 md:mt-0 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
+              {data
+                .filter((portfolio) => portfolio.type === "open")
+                .map((portfolio) => (
+                  <PortfolioCard
+                    key={portfolio.id}
+                    title={portfolio.title}
+                    description={portfolio.deskripsi}
+                    date={formatDate(portfolio.date)}
+                    image={portfolio.img_url}
+                    type={portfolio.type}
+                    techstack={portfolio.techstack}
+                    onClick={() => handleCardClick(portfolio)}
+                  />
+                ))}
             </div>
-          </div>
-        </motion.div>
-      ) : (
-        <>
-          <div className="fixed top-0 -z-50 h-screen w-full">
-            <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-dot-white/[0.15] bg-dot-black/[0.15] items-center justify-center"></div>
-            <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
-          </div>
-          <Tabs
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full md:mt-6 md:w-10/12 items-center justify-center mx-auto"
-          >
-            <TabsList className="rounded-none w-full">
-              <TabsTrigger value="open" className="w-1/2 mx-4">
-                Open Project
-              </TabsTrigger>
-              <TabsTrigger value="close" className="w-1/2 mx-4">
-                Private Project
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="open">
-              <div className="py-4 -mt-2 md:mt-0 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
-                {data
-                  .filter((portfolio) => portfolio.type === "open")
-                  .map((portfolio) => (
-                    <PortfolioCard
-                      key={portfolio.id}
-                      title={portfolio.title}
-                      description={portfolio.deskripsi}
-                      date={formatDate(portfolio.date)}
-                      image={portfolio.img_url}
-                      type={portfolio.type}
-                      techstack={portfolio.techstack}
-                      onClick={() => handleCardClick(portfolio)}
-                    />
-                  ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="close">
-              <div className="py-4 -mt-2 md:mt-0 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
-                {data
-                  .filter((portfolio) => portfolio.type === "close")
-                  .map((portfolio) => (
-                    <PortfolioCard
-                      key={portfolio.id}
-                      title={portfolio.title}
-                      description={portfolio.deskripsi}
-                      date={formatDate(portfolio.date)}
-                      image={portfolio.img_url}
-                      type={portfolio.type}
-                      techstack={portfolio.techstack}
-                      onClick={() => handleCardClick(portfolio)}
-                    />
-                  ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </>
+          </TabsContent>
+          <TabsContent value="close">
+            <div className="py-4 -mt-2 md:mt-0 lg:grid lg:grid-cols-2 lg:gap-4 mx-6">
+              {data
+                .filter((portfolio) => portfolio.type === "close")
+                .map((portfolio) => (
+                  <PortfolioCard
+                    key={portfolio.id}
+                    title={portfolio.title}
+                    description={portfolio.deskripsi}
+                    date={formatDate(portfolio.date)}
+                    image={portfolio.img_url}
+                    type={portfolio.type}
+                    techstack={portfolio.techstack}
+                    onClick={() => handleCardClick(portfolio)}
+                  />
+                ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       )}
-    </>
+      <Outlet context={data} />
+    </div>
   );
 }

@@ -1,17 +1,9 @@
-import Dashboard from "./pages/Dashboard.tsx";
-import Background from "./pages/Background.tsx";
-import Certification from "./pages/Certification.tsx";
-import Portfolio from "./pages/Portfolio.tsx";
-import Blog from "./pages/Blog.tsx";
-import Gallery from "./pages/Gallery.tsx";
-
+// src/App.tsx
+import { useState, useEffect } from "react";
+import { NavLink, useLocation, Outlet } from "react-router-dom";
 import LogoDark from "./assets/d_logo_dark.svg";
 import LogoLight from "./assets/d_logo_light.svg";
-
 import { Menu } from "lucide-react";
-
-import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -29,7 +21,6 @@ import { RiNextjsLine } from "react-icons/ri";
 import { SiNotion, SiShadcnui, SiHey } from "react-icons/si";
 import { BiLogoTypescript } from "react-icons/bi";
 import AceternityLogo from "@/assets/logo.png";
-
 import {
   Dialog,
   DialogContent,
@@ -38,14 +29,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import "./App.css";
 
 function App() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
     setIsDialogVisible(true);
@@ -55,23 +44,15 @@ function App() {
     setIsDarkMode(!isDarkMode);
   };
 
-  const ActivePage = () => {
-    switch (activePage) {
-      case 1:
-        return <Dashboard />;
-      case 2:
-        return <Background />;
-      case 3:
-        return <Certification />;
-      case 4:
-        return <Portfolio />;
-      case 5:
-        return <Blog />;
-      case 6:
-        return <Gallery />;
-      default:
-        return <Dashboard />;
-    }
+  const location = useLocation();
+
+  const routeNames: { [key: string]: string } = {
+    '/': 'Dashboard',
+    '/background': 'Background',
+    '/certification': 'Certification',
+    '/portfolio': 'Portfolio',
+    '/blog': 'Blog',
+    '/gallery': 'Gallery',
   };
 
   return (
@@ -80,7 +61,6 @@ function App() {
         <div className="md:hidden">
           <Dialog open={isDialogVisible} onOpenChange={setIsDialogVisible}>
             <DialogContent className="sm:max-w-md">
-              {" "}
               <DialogHeader>
                 <DialogDescription>
                   <div className="py-3 flex gap-4 items-center justify-center text-zinc-400">
@@ -102,7 +82,6 @@ function App() {
             <NavLink
               to="/"
               className="flex items-center gap-2 text-lg font-semibold md:text-base"
-              onClick={() => setActivePage(1)}
             >
               <img
                 src={isDarkMode ? LogoDark : LogoLight}
@@ -113,67 +92,61 @@ function App() {
             </NavLink>
             <NavLink
               to="/"
-              className={
-                activePage === 1
+              className={({ isActive }) =>
+                isActive
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
-              onClick={() => setActivePage(1)}
             >
               Dashboard
             </NavLink>
             <NavLink
-              to="/"
-              className={
-                activePage === 2
+              to="/background"
+              className={({ isActive }) =>
+                isActive
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
-              onClick={() => setActivePage(2)}
             >
               Background
             </NavLink>
             <NavLink
-              to="/"
-              className={
-                activePage === 3
+              to="/certification"
+              className={({ isActive }) =>
+                isActive
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
-              onClick={() => setActivePage(3)}
             >
               Certification
             </NavLink>
             <NavLink
-              to="/"
-              className={
-                activePage === 4
+              to="/portfolio"
+              className={({ isActive }) =>
+                isActive
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
-              onClick={() => setActivePage(4)}
             >
               Portfolio
             </NavLink>
             <NavLink
-              to="/"
-              className={
-                activePage === 5
+              to="/blog"
+              className={({ isActive }) =>
+                isActive
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
-              onClick={() => setActivePage(5)}
             >
               Blog
             </NavLink>
             <NavLink
-              to="/"
-              className={
-                activePage === 6
+              to="/gallery"
+              className={({ isActive }) =>
+                isActive
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
-              onClick={() => setActivePage(6)}
             >
               Gallery
             </NavLink>
@@ -195,7 +168,6 @@ function App() {
                   <NavLink
                     to="/"
                     className="flex items-center gap-2 text-lg font-semibold"
-                    onClick={() => setActivePage(1)}
                   >
                     <img
                       src={isDarkMode ? LogoDark : LogoLight}
@@ -208,77 +180,71 @@ function App() {
                 <SheetClose asChild>
                   <NavLink
                     to="/"
-                    className={
-                      activePage === 1
+                    className={({ isActive }) =>
+                      isActive
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
-                    onClick={() => setActivePage(1)}
                   >
                     Dashboard
                   </NavLink>
                 </SheetClose>
                 <SheetClose asChild>
                   <NavLink
-                    to="/"
-                    className={
-                      activePage === 2
+                    to="/background"
+                    className={({ isActive }) =>
+                      isActive
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
-                    onClick={() => setActivePage(2)}
                   >
                     Background
                   </NavLink>
                 </SheetClose>
                 <SheetClose asChild>
                   <NavLink
-                    to="/"
-                    className={
-                      activePage === 3
+                    to="/certification"
+                    className={({ isActive }) =>
+                      isActive
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
-                    onClick={() => setActivePage(3)}
                   >
                     Certification
                   </NavLink>
                 </SheetClose>
                 <SheetClose asChild>
                   <NavLink
-                    to="/"
-                    className={
-                      activePage === 4
+                    to="/portfolio"
+                    className={({ isActive }) =>
+                      isActive
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
-                    onClick={() => setActivePage(4)}
                   >
                     Portfolio
                   </NavLink>
                 </SheetClose>
                 <SheetClose asChild>
                   <NavLink
-                    to="/"
-                    className={
-                      activePage === 5
+                    to="/blog"
+                    className={({ isActive }) =>
+                      isActive
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
-                    onClick={() => setActivePage(5)}
                   >
                     Blog
                   </NavLink>
                 </SheetClose>
                 <SheetClose asChild>
                   <NavLink
-                    to="/"
-                    className={
-                      activePage === 6
+                    to="/gallery"
+                    className={({ isActive }) =>
+                      isActive
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
-                    onClick={() => setActivePage(6)}
                   >
                     Gallery
                   </NavLink>
@@ -290,19 +256,7 @@ function App() {
             <ModeToggle />
           </div>
           <div className="block md:hidden ml-auto mr-2 font-semibold text-lg text-zinc-300">
-            {activePage === 1
-              ? "Dashboard"
-              : activePage === 2
-                ? "Background"
-                : activePage === 3
-                  ? "Certification"
-                  : activePage === 4
-                    ? "Portfolio"
-                    : activePage === 5
-                      ? "Blog"
-                      : activePage === 6
-                        ? "Gallery"
-                        : "Unknown Page"}
+            {routeNames[location.pathname] || "Unknown Page"}
           </div>
           <div className="hidden md:block ml-auto">
             <Dialog>
@@ -330,10 +284,12 @@ function App() {
                             <FaReact className="flex-shrink-0 w-16 h-16 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">React.js</h3>
+                            <h3 className="text-lg font-semibold ">
+                              React.js
+                            </h3>
                             <p className="mt-1 text-muted-foreground">
-                              Front-end library for building user interfaces and
-                              components
+                              Front-end library for building user interfaces
+                              and components
                             </p>
                           </div>
                         </div>
@@ -344,7 +300,9 @@ function App() {
                             <RiNextjsLine className="flex-shrink-0 w-20 h-20 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">Next.js</h3>
+                            <h3 className="text-lg font-semibold ">
+                              Next.js
+                            </h3>
                             <p className="mt-1 text-muted-foreground">
                               For fetch data from Notion Database API and
                               routing
@@ -362,7 +320,8 @@ function App() {
                               TypeScript
                             </h3>
                             <p className="mt-1 text-muted-foreground">
-                              For type checking, module importing and exporting
+                              For type checking, module importing and
+                              exporting
                             </p>
                           </div>
                         </div>
@@ -399,7 +358,8 @@ function App() {
                               Shadcn UI
                             </h3>
                             <p className="mt-1 text-muted-foreground">
-                              For component, theme, color and layout management
+                              For component, theme, color and layout
+                              management
                             </p>
                           </div>
                         </div>
@@ -432,8 +392,8 @@ function App() {
             </Dialog>
           </div>
         </header>
-        <main className="flex flex-1 flex-col gap-4 md:gap-8  z-0">
-          <ActivePage />
+        <main className="flex flex-1 flex-col gap-4 md:gap-8 z-0">
+          <Outlet />
         </main>
       </div>
     </ThemeProvider>

@@ -1,11 +1,11 @@
+// src/pages/Blog.tsx
 import { BsCalendarDate } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { BlockMapType } from "react-notion";
 import axios from "axios";
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
-import { NotionRenderer } from "react-notion";
-import { Button } from "@/components/ui/button";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -64,8 +64,10 @@ function BlogCard({ title, description, date, image, onClick }: BlogPost) {
 
 function Blog() {
   const [data, setData] = useState<Blog[]>([]);
-  const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
+  const isBlogRoute = location.pathname === "/blog";
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,7 +79,7 @@ function Blog() {
         if (response.status !== 200) {
           throw new Error("Notion API request failed");
         }
-        
+
         const sortedData = sortByDate(response.data);
         setData(sortedData);
       } catch (error) {
@@ -91,7 +93,9 @@ function Blog() {
   }, []);
 
   const sortByDate = (data: Blog[]): Blog[] => {
-    return data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return data.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
   };
 
   const formatDate = (dateString: string) => {
@@ -104,15 +108,11 @@ function Blog() {
   };
 
   const handleCardClick = (blog: Blog) => {
-    setSelectedBlog(blog);
-  };
-
-  const handleBackClick = () => {
-    setSelectedBlog(null);
+    navigate(`${blog.id}`, { state: { blog } });
   };
 
   return (
-    <>
+    <div>
       <AnimatePresence>
         {isLoading && (
           <motion.div
@@ -128,31 +128,7 @@ function Blog() {
           </motion.div>
         )}
       </AnimatePresence>
-      {selectedBlog ? (
-        <motion.div
-          initial={{ opacity: 0.0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.3,
-            duration: 0.5,
-            ease: "easeInOut",
-          }}
-          className=""
-        >
-          <div className="p-8 md:p-16 item-left text-left bg-zinc-200 min-h-screen relative">
-          <Button
-              onClick={handleBackClick}
-              variant="outline"
-              className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8 lg:bottom-16 lg:right-16 bg-zinc-800 text-zinc-100 border-zinc-200 hover:bg-zinc-600"
-            >
-              Back to Blog List
-            </Button>
-            <div className="self-start">
-              <NotionRenderer blockMap={selectedBlog.properties} />
-            </div>
-          </div>
-        </motion.div>
-      ) : (
+      {isBlogRoute && (
         <div className="mx-auto py-4 md:py-12 px-8 md:px-12 lg:px-24 lg:grid lg:grid-cols-2 lg:gap-4">
           {data.map((blog) => (
             <BlogCard
@@ -166,7 +142,8 @@ function Blog() {
           ))}
         </div>
       )}
-    </>
+      <Outlet />
+    </div>
   );
 }
 
