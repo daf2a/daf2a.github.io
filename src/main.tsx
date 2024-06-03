@@ -1,7 +1,7 @@
 // src/main.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import Background from "./pages/Background";
@@ -14,28 +14,34 @@ import BlogItem from "./pages/BlogItem";
 
 import "./index.css";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "/", element: <Dashboard /> },
+      { path: "/background", element: <Background /> },
+      { path: "/certification", element: <Certification /> },
+      {
+        path: "/portfolio",
+        element: <Portfolio />,
+        children: [
+          { path: "/open/:id", element: <PortfolioItem /> },
+          { path: "/close/:id", element: <PortfolioItem /> },
+        ],
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+        children: [{ path: "/:id", element: <BlogItem /> }],
+      },
+      { path: "/gallery", element: <Gallery /> },
+    ],
+  },
+]);
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Dashboard />} />
-          <Route path="background" element={<Background />} />
-          <Route path="certification" element={<Certification />} />
-          <Route path="portfolio" element={<Portfolio />}>
-            <Route path="open" element={<Portfolio />}>
-              <Route path=":id" element={<PortfolioItem />} />
-            </Route>
-            <Route path="close" element={<Portfolio />}>
-              <Route path=":id" element={<PortfolioItem />} />
-            </Route>
-          </Route>
-          <Route path="blog" element={<Blog />}>
-            <Route path=":id" element={<BlogItem />} />
-          </Route>
-          <Route path="gallery" element={<Gallery />} />
-        </Route>
-      </Routes>
-    </Router>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

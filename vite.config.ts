@@ -6,7 +6,7 @@ import { defineConfig } from "vite"
 export default defineConfig({
 	build: {
     manifest: true,
-    outDir: "build/",
+    outDir: "dist/",
   },
   plugins: [react(), svgr()],
   resolve: {
@@ -14,4 +14,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: "/",
 })
