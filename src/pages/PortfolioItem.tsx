@@ -92,7 +92,7 @@ const PortfolioItem: React.FC = () => {
           variant="outline"
           className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8 lg:bottom-16 lg:right-16 bg-zinc-800 text-zinc-100 border-zinc-200 hover:bg-zinc-600"
         >
-          Back to Blog List
+          Back to Project List
         </Button>
         <div className="self-start">
           {portfolio.properties ? (
