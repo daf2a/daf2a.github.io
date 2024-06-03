@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const DirectionAwareHover = ({
   imageUrl,
@@ -58,6 +59,8 @@ export const DirectionAwareHover = ({
     return d;
   };
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <motion.div
       onMouseEnter={handleMouseEnter}
@@ -83,9 +86,12 @@ export const DirectionAwareHover = ({
               ease: "easeOut",
             }}
           >
+            {!isLoaded && <Skeleton className="rounded-lg w-full h-full"/>}{" "}
             <img
               src={imageUrl}
               alt="image"
+              onLoad={() => setIsLoaded(true)}
+              style={{ display: isLoaded ? "block" : "none" }}
               className={cn(
                 "object-cover scale-[1.15] w-full h-full",
                 imageClassName
