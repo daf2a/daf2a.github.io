@@ -20,22 +20,22 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <Dashboard /> },
-      { path: "/background", element: <Background /> },
-      { path: "/certification", element: <Certification /> },
+      { path: "background", element: <Background /> },
+      { path: "certification", element: <Certification /> },
       {
-        path: "/portfolio",
+        path: "portfolio",
         element: <Portfolio />,
         children: [
-          { path: "/open/:id", element: <PortfolioItem /> },
-          { path: "/close/:id", element: <PortfolioItem /> },
+          { path: "open/:id", element: <PortfolioItem /> },
+          { path: "close/:id", element: <PortfolioItem /> },
         ],
       },
       {
-        path: "/blog",
+        path: "blog",
         element: <Blog />,
-        children: [{ path: "/:id", element: <BlogItem /> }],
+        children: [{ path: ":id", element: <BlogItem /> }],
       },
-      { path: "/gallery", element: <Gallery /> },
+      { path: "gallery", element: <Gallery /> },
     ],
   },
 ]);
