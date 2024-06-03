@@ -1,6 +1,6 @@
 // src/App.tsx
 import { useState, useEffect } from "react";
-import { NavLink, useLocation, Outlet } from "react-router-dom";
+import { NavLink, useLocation, Outlet, matchPath } from "react-router-dom";
 import LogoDark from "./assets/d_logo_dark.svg";
 import LogoLight from "./assets/d_logo_light.svg";
 import { Menu } from "lucide-react";
@@ -47,12 +47,41 @@ function App() {
   const location = useLocation();
 
   const routeNames: { [key: string]: string } = {
-    '/': 'Dashboard',
-    '/background': 'Background',
-    '/certification': 'Certification',
-    '/portfolio': 'Portfolio',
-    '/blog': 'Blog',
-    '/gallery': 'Gallery',
+    "/": "Dashboard",
+    "/background": "Background",
+    "/certification": "Certification",
+    "/portfolio": "Portfolio",
+    "/blog": "Blog",
+    "/gallery": "Gallery",
+  };
+
+  // Custom hook to check if a path is active
+  const useIsActive = (to: string) => {
+    const location = useLocation();
+    return !!matchPath({ path: to, end: true }, location.pathname);
+  };
+
+  // Define the props for CustomNavLink
+  interface CustomNavLinkProps {
+    to: string;
+    children: React.ReactNode;
+  }
+
+  // Use this hook inside your NavLink components
+  const CustomNavLink: React.FC<CustomNavLinkProps> = ({ to, children }) => {
+    const isActive = useIsActive(to);
+    return (
+      <NavLink
+        to={to}
+        className={
+          isActive
+            ? "text-foreground"
+            : "text-muted-foreground transition-colors hover:text-foreground"
+        }
+      >
+        {children}
+      </NavLink>
+    );
   };
 
   return (
@@ -165,89 +194,36 @@ function App() {
             <SheetContent side="left">
               <nav className="grid gap-6 text-lg font-medium">
                 <SheetClose asChild>
-                  <NavLink
-                    to="/"
-                    className="flex items-center gap-2 text-lg font-semibold"
-                  >
-                    <img
-                      src={isDarkMode ? LogoDark : LogoLight}
-                      alt="Logo"
-                      className="h-6 w-6"
-                    />
-                    <span className="sr-only">Daf2a</span>
-                  </NavLink>
+                  <CustomNavLink to="/">
+                    <div className="flex items-center gap-2 text-lg font-semibold">
+                      <img
+                        src={isDarkMode ? LogoDark : LogoLight}
+                        alt="Logo"
+                        className="h-6 w-6"
+                      />
+                      <span className="sr-only">Daf2a</span>
+                    </div>
+                  </CustomNavLink>
                 </SheetClose>
                 <SheetClose asChild>
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground transition-colors hover:text-foreground"
-                    }
-                  >
-                    Dashboard
-                  </NavLink>
+                  <CustomNavLink to="/">Dashboard</CustomNavLink>
                 </SheetClose>
                 <SheetClose asChild>
-                  <NavLink
-                    to="/background"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground transition-colors hover:text-foreground"
-                    }
-                  >
-                    Background
-                  </NavLink>
+                  <CustomNavLink to="/background">Background</CustomNavLink>
                 </SheetClose>
                 <SheetClose asChild>
-                  <NavLink
-                    to="/certification"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground transition-colors hover:text-foreground"
-                    }
-                  >
+                  <CustomNavLink to="/certification">
                     Certification
-                  </NavLink>
+                  </CustomNavLink>
                 </SheetClose>
                 <SheetClose asChild>
-                  <NavLink
-                    to="/portfolio"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground transition-colors hover:text-foreground"
-                    }
-                  >
-                    Portfolio
-                  </NavLink>
+                  <CustomNavLink to="/portfolio">Portfolio</CustomNavLink>
                 </SheetClose>
                 <SheetClose asChild>
-                  <NavLink
-                    to="/blog"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground transition-colors hover:text-foreground"
-                    }
-                  >
-                    Blog
-                  </NavLink>
+                  <CustomNavLink to="/blog">Blog</CustomNavLink>
                 </SheetClose>
                 <SheetClose asChild>
-                  <NavLink
-                    to="/gallery"
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground transition-colors hover:text-foreground"
-                    }
-                  >
-                    Gallery
-                  </NavLink>
+                  <CustomNavLink to="/gallery">Gallery</CustomNavLink>
                 </SheetClose>
               </nav>
             </SheetContent>
@@ -284,12 +260,10 @@ function App() {
                             <FaReact className="flex-shrink-0 w-16 h-16 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">
-                              React.js
-                            </h3>
+                            <h3 className="text-lg font-semibold ">React.js</h3>
                             <p className="mt-1 text-muted-foreground">
-                              Front-end library for building user interfaces
-                              and components
+                              Front-end library for building user interfaces and
+                              components
                             </p>
                           </div>
                         </div>
@@ -300,9 +274,7 @@ function App() {
                             <RiNextjsLine className="flex-shrink-0 w-20 h-20 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">
-                              Next.js
-                            </h3>
+                            <h3 className="text-lg font-semibold ">Next.js</h3>
                             <p className="mt-1 text-muted-foreground">
                               For fetch data from Notion Database API and
                               routing
@@ -320,8 +292,7 @@ function App() {
                               TypeScript
                             </h3>
                             <p className="mt-1 text-muted-foreground">
-                              For type checking, module importing and
-                              exporting
+                              For type checking, module importing and exporting
                             </p>
                           </div>
                         </div>
@@ -358,8 +329,7 @@ function App() {
                               Shadcn UI
                             </h3>
                             <p className="mt-1 text-muted-foreground">
-                              For component, theme, color and layout
-                              management
+                              For component, theme, color and layout management
                             </p>
                           </div>
                         </div>
