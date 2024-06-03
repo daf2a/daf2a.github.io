@@ -1,17 +1,17 @@
 {
   "index.html": {
-    "file": "assets/index-CyidfGzG.js",
+    "file": "assets/index-DHjjU_mz.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-DgGYUNZP.css"
+      "assets/index-DYqCL0T7.css"
     ],
     "assets": [
+      "assets/logo-D7p2WCiF.png",
       "assets/photo-DLOMmmqe.jpg",
       "assets/dicoding-BnTYBPzC.png",
-      "assets/rubrikgrafis-uCeVKk0G.png",
-      "assets/logo-D7p2WCiF.png"
+      "assets/rubrikgrafis-uCeVKk0G.png"
     ]
   },
   "src/assets/dicoding.png": {
