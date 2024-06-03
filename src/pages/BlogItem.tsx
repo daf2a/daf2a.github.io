@@ -35,7 +35,9 @@ const BlogItem: React.FC = () => {
     if (!blogId) return;
 
     try {
-      const response = await axios.get("https://be-daf2a.vercel.app/api/notion-blog");
+      const response = await axios.get(
+        "https://be-daf2a.vercel.app/api/notion-blog"
+      );
       if (response.status !== 200) {
         throw new Error("Notion API request failed");
       }
@@ -69,9 +71,7 @@ const BlogItem: React.FC = () => {
   }
 
   if (!blog) {
-    return (
-      <div className="py-8 text-zinc-300">Blog post not found.</div>
-    );
+    return <div className="py-8 text-zinc-300">Blog post not found.</div>;
   }
 
   return (
@@ -87,7 +87,7 @@ const BlogItem: React.FC = () => {
     >
       <div className="p-8 md:p-16 item-left text-left bg-zinc-200 min-h-screen relative z-50">
         <Button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/blog")}
           variant="outline"
           className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8 lg:bottom-16 lg:right-16 bg-zinc-800 text-zinc-100 border-zinc-200 hover:bg-zinc-600"
         >

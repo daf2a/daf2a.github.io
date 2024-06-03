@@ -87,12 +87,12 @@ const PortfolioItem: React.FC = () => {
       className=""
     >
       <div className="p-8 md:p-16 item-left text-left bg-zinc-200 min-h-screen relative z-50">
-        <Button
-          onClick={() => navigate(-1)}
+      <Button
+          onClick={() => navigate("/portfolio")}
           variant="outline"
           className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8 lg:bottom-16 lg:right-16 bg-zinc-800 text-zinc-100 border-zinc-200 hover:bg-zinc-600"
         >
-          Back to Project List
+          Back to Blog List
         </Button>
         <div className="self-start">
           {portfolio.properties ? (

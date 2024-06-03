@@ -193,7 +193,7 @@ function App() {
                   <NavLink
                     to="/background"
                     className={
-                      location.pathname === "/background"
+                      location.pathname.split("/")[1] === "background"
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
@@ -205,7 +205,7 @@ function App() {
                   <NavLink
                     to="/certification"
                     className={
-                      location.pathname === "/certification"
+                      location.pathname.split("/")[1] === "certification"
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
@@ -217,7 +217,7 @@ function App() {
                   <NavLink
                     to="/portfolio"
                     className={
-                      location.pathname === "/portfolio"
+                      location.pathname.split("/")[1] === "portfolio"
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
@@ -229,7 +229,7 @@ function App() {
                   <NavLink
                     to="/blog"
                     className={
-                      location.pathname === "/blog"
+                      location.pathname.split("/")[1] === "blog"
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
@@ -241,7 +241,7 @@ function App() {
                   <NavLink
                     to="/gallery"
                     className={
-                      location.pathname === "/gallery"
+                      location.pathname.split("/")[1] === "gallery"
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
@@ -256,7 +256,8 @@ function App() {
             <ModeToggle />
           </div>
           <div className="block md:hidden ml-auto mr-2 font-semibold text-lg text-zinc-300">
-            {routeNames[location.pathname] || "Unknown Page"}
+            {routeNames["/" + location.pathname.split("/")[1]] ||
+              "Unknown Page"}
           </div>
           <div className="hidden md:block ml-auto">
             <Dialog>
