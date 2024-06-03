@@ -17,7 +17,7 @@ const PortfolioItem: React.FC = () => {
   }, []);
 
   if (!portfolio) {
-    return <div>Portfolio item not found.</div>;
+    return <div className="py-8 text-zinc-300">You need to go back and select a portfolio item again.</div>;
   }
 
   return (
