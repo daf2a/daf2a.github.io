@@ -17,6 +17,10 @@ export default function Background() {
   const [loadedImages, setLoadedImages] = useState<boolean[]>([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+  
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(

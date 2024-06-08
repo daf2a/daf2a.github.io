@@ -70,6 +70,10 @@ function Blog() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(

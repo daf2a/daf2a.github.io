@@ -113,6 +113,10 @@ export default function Portfolio(): ReactElement {
   const isPortfolioRoute = location.pathname === "/portfolio";
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(

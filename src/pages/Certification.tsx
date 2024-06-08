@@ -206,6 +206,10 @@ export default function SkillsAndCertifications() {
     setIsDialogVisible(false);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   return (
     <div className="w-full lg:px-24 mx-auto py-6 md:py-12 px-6 md:px-12 text-left">
       {isDialogVisible && (

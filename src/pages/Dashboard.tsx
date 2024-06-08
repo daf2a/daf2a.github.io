@@ -6,6 +6,7 @@ import { HiDocumentText } from "react-icons/hi2";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { motion } from "framer-motion";
 import ProfilePhoto from "@/assets/photo.jpg";
+import { useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -17,6 +18,10 @@ import {
 
 export default function Dashboard() {
   const words = ["Innovative", "Driven", "Visionary", "Talented", "Skilled"];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   return (
     <div className="p-4 md:p-8 mt-4">
