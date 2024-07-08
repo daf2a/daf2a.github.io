@@ -10,6 +10,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import { motion, AnimatePresence } from "framer-motion";
+import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
+
 
 interface PortfolioPost {
   title: string;
@@ -168,10 +170,7 @@ export default function Portfolio(): ReactElement {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-            <p className="text-zinc-400 text-sm mt-6">
-              Fetching data from Notion...
-            </p>
+            <LottieAnimationCat />
           </motion.div>
         )}
       </AnimatePresence>

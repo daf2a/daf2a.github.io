@@ -4,6 +4,8 @@ import { NotionRenderer, BlockMapType } from "react-notion";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
+
 
 interface Portfolio {
   id: string;
@@ -22,7 +24,9 @@ const PortfolioItem: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { state } = location;
 
-  const [portfolio, setPortfolio] = useState<Portfolio | null>(state?.portfolio || null);
+  const [portfolio, setPortfolio] = useState<Portfolio | null>(
+    state?.portfolio || null
+  );
   const [isLoading, setIsLoading] = useState(!portfolio);
 
   useEffect(() => {
@@ -36,11 +40,15 @@ const PortfolioItem: React.FC = () => {
     if (!portfolioId) return;
 
     try {
-      const response = await axios.get(`https://be-daf2a.vercel.app/api/notion-portfolio`);
+      const response = await axios.get(
+        `https://be-daf2a.vercel.app/api/notion-portfolio`
+      );
       if (response.status !== 200) {
         throw new Error("Notion API request failed");
       }
-      const portfolioData = response.data.find((item: Portfolio) => item.id === portfolioId);
+      const portfolioData = response.data.find(
+        (item: Portfolio) => item.id === portfolioId
+      );
       setPortfolio(portfolioData);
     } catch (error) {
       console.error("Error fetching Notion data:", error);
@@ -59,10 +67,7 @@ const PortfolioItem: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-            <p className="text-zinc-400 text-sm mt-6">
-              Fetching data from Notion...
-            </p>
+            <LottieAnimationCat />
           </motion.div>
         )}
       </AnimatePresence>
@@ -71,7 +76,9 @@ const PortfolioItem: React.FC = () => {
 
   if (!portfolio) {
     return (
-      <div className="py-8 text-zinc-300">You need to go back and select a portfolio item again.</div>
+      <div className="py-8 text-zinc-300">
+        You need to go back and select a portfolio item again.
+      </div>
     );
   }
 
@@ -87,7 +94,7 @@ const PortfolioItem: React.FC = () => {
       className=""
     >
       <div className="p-8 md:p-16 item-left text-left bg-zinc-200 min-h-screen relative z-50">
-      <Button
+        <Button
           onClick={() => navigate("/portfolio")}
           variant="outline"
           className="fixed bottom-4 right-4 z-50 md:bottom-8 md:right-8 lg:bottom-16 lg:right-16 bg-zinc-800 text-zinc-100 border-zinc-200 hover:bg-zinc-600"

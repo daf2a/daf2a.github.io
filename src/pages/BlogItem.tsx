@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { NotionRenderer, BlockMapType } from "react-notion";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
 import axios from "axios";
 
 interface Blog {
@@ -60,10 +61,7 @@ const BlogItem: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-            <p className="text-zinc-400 text-sm mt-6">
-              Fetching data from Notion...
-            </p>
+            <LottieAnimationCat />
           </motion.div>
         )}
       </AnimatePresence>
