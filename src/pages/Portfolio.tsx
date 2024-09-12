@@ -120,8 +120,9 @@ export default function Portfolio(): ReactElement {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const baseURL = process.env.BASE_URL;
-        const response = await axios.get(`${baseURL}/notion-portfolio`);
+        const response = await axios.get(
+          `https://be-daf2a.vercel.app/api/notion-portfolio`
+        );
 
         if (response.status !== 200) {
           throw new Error("Notion API request failed");

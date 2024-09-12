@@ -36,8 +36,9 @@ const BlogItem: React.FC = () => {
     if (!blogId) return;
 
     try {
-      const baseURL = process.env.BASE_URL;
-      const response = await axios.get(`${baseURL}/notion-blog`);
+      const response = await axios.get(
+        `https://be-daf2a.vercel.app/api/notion-blog`
+      );
       if (response.status !== 200) {
         throw new Error("Notion API request failed");
       }
