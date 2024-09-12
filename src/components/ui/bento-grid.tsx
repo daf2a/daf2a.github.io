@@ -25,11 +25,13 @@ export const BentoGridItem = ({
   title,
   description,
   imageUrl,
+  showCaption,
 }: {
   className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
   imageUrl: string;
+  showCaption?: boolean;
 }) => {
   return (
     <div
@@ -38,7 +40,7 @@ export const BentoGridItem = ({
         className
       )}
     >
-      <DirectionAwareHover imageUrl={imageUrl}>
+      <DirectionAwareHover imageUrl={imageUrl} showCaption={showCaption}>
         <p className="font-bold text-xl">{title}</p>
         <p className="font-normal text-sm">{description}</p>
       </DirectionAwareHover>

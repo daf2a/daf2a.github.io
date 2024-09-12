@@ -12,7 +12,6 @@ import "prismjs/themes/prism-tomorrow.css";
 import { motion, AnimatePresence } from "framer-motion";
 import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
 
-
 interface PortfolioPost {
   title: string;
   description: string;

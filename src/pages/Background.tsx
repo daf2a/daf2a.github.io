@@ -20,7 +20,7 @@ export default function Background() {
   useEffect(() => {
     window.scrollTo(0, 0);
   });
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {

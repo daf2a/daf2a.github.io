@@ -9,12 +9,14 @@ export const DirectionAwareHover = ({
   childrenClassName,
   imageClassName,
   className,
+  showCaption,
 }: {
   imageUrl: string;
   children: React.ReactNode | string;
   childrenClassName?: string;
   imageClassName?: string;
   className?: string;
+  showCaption?: boolean;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -28,7 +30,6 @@ export const DirectionAwareHover = ({
     if (!ref.current) return;
 
     const direction = getDirection(event, ref.current);
-    console.log("direction", direction);
     switch (direction) {
       case 0:
         setDirection("top");
@@ -86,7 +87,7 @@ export const DirectionAwareHover = ({
               ease: "easeOut",
             }}
           >
-            {!isLoaded && <Skeleton className="rounded-lg w-full h-full"/>}{" "}
+            {!isLoaded && <Skeleton className="rounded-lg w-full h-full" />}
             <img
               src={imageUrl}
               alt="image"
@@ -98,6 +99,21 @@ export const DirectionAwareHover = ({
               )}
             />
           </motion.div>
+
+          {showCaption && (
+            <div
+              className={cn(
+                "text-white absolute bottom-4 left-4 z-40 md:hidden",
+                childrenClassName
+              )}
+              style={{
+                textShadow: "1px 1px 2px black",
+              }}
+            >
+              {children}
+            </div>
+          )}
+
           <motion.div
             variants={textVariants}
             transition={{
@@ -105,7 +121,7 @@ export const DirectionAwareHover = ({
               ease: "easeOut",
             }}
             className={cn(
-              "text-white absolute bottom-4 left-4 z-40",
+              "text-white absolute bottom-4 left-4 z-40 hidden md:block",
               childrenClassName
             )}
           >

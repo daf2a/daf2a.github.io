@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
 
-
 interface Portfolio {
   id: string;
   title: string;

@@ -10,7 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
 
-
 interface BlogPost {
   title: string;
   description: string;

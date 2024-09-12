@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { Switch } from "@/components/ui/switch";
 import { motion, AnimatePresence } from "framer-motion";
 import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
 
@@ -14,6 +15,9 @@ interface GalleryItem {
 export default function Gallery() {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showCaption, setShowCaption] = useState(true);
+
+  const toggleCaption = () => setShowCaption(!showCaption);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -67,6 +71,18 @@ export default function Gallery() {
         <div className="h-screen w-full dark:bg-transparent bg-white dark:bg-grid-white/[0.05] bg-grid-black/[0.05] items-center justify-center"></div>
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
       </div>
+
+      <div className="fixed z-50 bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-zinc-950 border dark:border-white/[0.2] border-gray/[0.2] rounded-full px-3 py-2 flex items-center space-x-2 md:hidden">
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          Caption
+        </span>
+        <Switch
+          checked={showCaption}
+          onCheckedChange={toggleCaption}
+          className="rounded-full"
+        />
+      </div>
+
       <BentoGrid className="max-w-full mx-auto text-left py-8 px-8 md:py-14 md:px-32">
         {items.map((item, i) => (
           <BentoGridItem
@@ -74,6 +90,7 @@ export default function Gallery() {
             title={item.name}
             description={item.date}
             imageUrl={item.img}
+            showCaption={showCaption}
             className={
               (i + 2) % 7 === 3 || (i + 2) % 7 === 4 ? "md:col-span-2" : ""
             }
