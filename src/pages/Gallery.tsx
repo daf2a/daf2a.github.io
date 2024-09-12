@@ -22,9 +22,8 @@ export default function Gallery() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://be-daf2a.vercel.app/api/notion-gallery"
-        );
+        const baseURL = process.env.BASE_URL;
+        const response = await axios.get(`${baseURL}/notion-gallery`);
 
         if (response.status !== 200) {
           throw new Error("Notion API request failed");

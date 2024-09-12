@@ -40,9 +40,8 @@ const PortfolioItem: React.FC = () => {
     if (!portfolioId) return;
 
     try {
-      const response = await axios.get(
-        `https://be-daf2a.vercel.app/api/notion-portfolio`
-      );
+      const baseURL = process.env.BASE_URL;
+      const response = await axios.get(`${baseURL}/notion-portfolio`);
       if (response.status !== 200) {
         throw new Error("Notion API request failed");
       }
