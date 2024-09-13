@@ -16,11 +16,15 @@ export default function Gallery() {
   const [items, setItems] = useState<GalleryItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showCaption, setShowCaption] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const toggleCaption = () => setShowCaption(!showCaption);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
   });
 
   useEffect(() => {
@@ -62,6 +66,11 @@ export default function Gallery() {
     fetchData();
   }, []);
 
+  const fadeStyle = {
+    opacity: isVisible ? 1 : 0,
+    transition: 'opacity 1s ease-in-out',
+  };
+
   return (
     <>
       <AnimatePresence>
@@ -81,7 +90,7 @@ export default function Gallery() {
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
       </div>
 
-      <div className="fixed z-50 bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-zinc-950 border dark:border-white/[0.2] border-gray/[0.2] rounded-full px-3 py-2 flex items-center space-x-2 md:hidden">
+      <div style={fadeStyle} className="fixed z-50 bottom-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-zinc-950 border dark:border-white/[0.2] border-gray/[0.2] rounded-full px-3 py-2 flex items-center space-x-2 md:hidden">
         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
           Caption
         </span>
@@ -92,20 +101,23 @@ export default function Gallery() {
         />
       </div>
 
-      <BentoGrid className="max-w-full mx-auto text-left py-8 px-8 md:py-14 md:px-32">
-        {items.map((item, i) => (
-          <BentoGridItem
-            key={i}
-            title={item.name}
-            description={item.date}
-            imageUrl={item.img}
-            showCaption={showCaption}
-            className={
-              (i + 2) % 7 === 3 || (i + 2) % 7 === 4 ? "md:col-span-2" : ""
-            }
-          />
-        ))}
-      </BentoGrid>
+      <div style={fadeStyle}>
+        <BentoGrid className="max-w-full mx-auto text-left py-8 px-8 md:py-14 md:px-32">
+              {items.map((item, i) => (
+                <BentoGridItem
+                  key={i}
+                  title={item.name}
+                  description={item.date}
+                  imageUrl={item.img}
+                  showCaption={showCaption}
+                  className={
+                    (i + 2) % 7 === 3 || (i + 2) % 7 === 4 ? "md:col-span-2" : ""
+                  }
+                />
+              ))}
+            </BentoGrid>
+      </div>
+
     </>
   );
 }

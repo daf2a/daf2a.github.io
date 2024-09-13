@@ -112,9 +112,13 @@ export default function Portfolio(): ReactElement {
   const navigate = useNavigate();
   const location = useLocation();
   const isPortfolioRoute = location.pathname === "/portfolio";
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
   });
 
   useEffect(() => {
@@ -167,6 +171,11 @@ export default function Portfolio(): ReactElement {
     navigate(`${portfolio.type}/${portfolio.id}`, { state: { portfolio } });
   };
 
+  const fadeStyle = {
+    opacity: isVisible ? 1 : 0,
+    transition: 'opacity 0.5s ease-in-out',
+  };
+
   return (
     <div>
       <AnimatePresence>
@@ -188,6 +197,7 @@ export default function Portfolio(): ReactElement {
       {isPortfolioRoute && (
         <Tabs
           value={activeTab}
+          style={fadeStyle}
           onValueChange={setActiveTab}
           className="w-full md:mt-6 md:w-10/12 items-center justify-center mx-auto"
         >

@@ -16,9 +16,13 @@ export default function Background() {
   const [content, setContent] = useState<BackgroundItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadedImages, setLoadedImages] = useState<boolean[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
   });
 
   useEffect(() => {
@@ -68,6 +72,11 @@ export default function Background() {
     });
   };
 
+  const fadeStyle = {
+    opacity: isVisible ? 1 : 0,
+    transition: 'opacity 0.5s ease-in-out',
+  };
+
   return (
     <>
       <AnimatePresence>
@@ -87,7 +96,7 @@ export default function Background() {
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
       </div>
 
-      <div className="md:pt-10 mt-4 mx-6">
+      <div className="md:pt-10 mt-4 mx-6" style={fadeStyle}>
         <TracingBeam>
           <div className="max-w-xl md:max-w-3xl -ml-2 md:ml-0 antialiased pt-4 relative md:px-8 text-left">
             {content.map((item, index) => (

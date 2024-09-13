@@ -69,9 +69,13 @@ function Blog() {
   const location = useLocation();
   const isBlogRoute = location.pathname === "/blog";
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
   });
 
   useEffect(() => {
@@ -124,6 +128,11 @@ function Blog() {
     navigate(`${blog.id}`, { state: { blog } });
   };
 
+  const fadeStyle = {
+    opacity: isVisible ? 1 : 0,
+    transition: 'opacity 0.5s ease-in-out',
+  };
+
   return (
     <div>
       <AnimatePresence>
@@ -139,7 +148,7 @@ function Blog() {
         )}
       </AnimatePresence>
       {isBlogRoute && (
-        <div className="mx-auto py-4 md:py-12 px-8 md:px-12 lg:px-24 lg:grid lg:grid-cols-2 lg:gap-4">
+        <div className="mx-auto py-4 md:py-12 px-8 md:px-12 lg:px-24 lg:grid lg:grid-cols-2 lg:gap-4" style={fadeStyle}>
           {data.map((blog) => (
             <BlogCard
               key={blog.id}
