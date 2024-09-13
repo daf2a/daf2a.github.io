@@ -38,7 +38,7 @@ const PortfolioItem: React.FC = () => {
   const fetchPortfolioData = async (portfolioId: string | undefined) => {
     if (!portfolioId) return;
 
-    const cachedData = localStorage.getItem("portfolioData");
+    const cachedData = sessionStorage.getItem("portfolioData");
       
     if (cachedData) {
       setPortfolio(JSON.parse(cachedData));
@@ -54,7 +54,7 @@ const PortfolioItem: React.FC = () => {
         const portfolioData = response.data.find(
           (item: Portfolio) => item.id === portfolioId
         );
-        localStorage.setItem("portfolioData", JSON.stringify(portfolioData));
+        sessionStorage.setItem("portfolioData", JSON.stringify(portfolioData));
         setPortfolio(portfolioData);
       } catch (error) {
         console.error("Error fetching Notion data:", error);

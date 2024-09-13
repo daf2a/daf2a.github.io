@@ -27,7 +27,7 @@ export default function Background() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const cachedData = localStorage.getItem("backgroundData");
+      const cachedData = sessionStorage.getItem("backgroundData");
 
       if (cachedData) {
         setContent(JSON.parse(cachedData));
@@ -49,7 +49,7 @@ export default function Background() {
             title: item.title,
             img: item.img,
           }));
-          localStorage.setItem("backgroundData", JSON.stringify(transformedContent));
+          sessionStorage.setItem("backgroundData", JSON.stringify(transformedContent));
 
           setContent(transformedContent);
           setLoadedImages(new Array(transformedContent.length).fill(false));

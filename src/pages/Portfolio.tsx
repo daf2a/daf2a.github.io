@@ -123,7 +123,7 @@ export default function Portfolio(): ReactElement {
 
   useEffect(() => {
     const fetchData = async () => {
-      const cachedData = localStorage.getItem("portfolioData");
+      const cachedData = sessionStorage.getItem("portfolioData");
       
       if (cachedData) {
         setData(JSON.parse(cachedData));
@@ -139,7 +139,7 @@ export default function Portfolio(): ReactElement {
           }
 
           const sortedData = sortByDate(response.data);
-          localStorage.setItem("portfolioData", JSON.stringify(sortedData));
+          sessionStorage.setItem("portfolioData", JSON.stringify(sortedData));
           setData(sortedData);
         } catch (error) {
           console.error("Error fetching Notion data:", error);

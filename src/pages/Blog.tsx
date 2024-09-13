@@ -80,7 +80,7 @@ function Blog() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const cachedData = localStorage.getItem("blogData");
+      const cachedData = sessionStorage.getItem("blogData");
 
       if (cachedData) {
         setData(JSON.parse(cachedData));
@@ -96,7 +96,7 @@ function Blog() {
           }
 
           const sortedData = sortByDate(response.data);
-          localStorage.setItem("blogData", JSON.stringify(sortedData));
+          sessionStorage.setItem("blogData", JSON.stringify(sortedData));
           setData(sortedData);
         } catch (error) {
           console.error("Error fetching Notion data:", error);

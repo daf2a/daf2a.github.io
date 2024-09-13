@@ -29,7 +29,7 @@ export default function Gallery() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const cachedData = localStorage.getItem("galleryData");
+      const cachedData = sessionStorage.getItem("galleryData");
       
       if (cachedData) {
         setItems(JSON.parse(cachedData));
@@ -52,7 +52,7 @@ export default function Gallery() {
             img: item.img,
           }));
 
-          localStorage.setItem("galleryData", JSON.stringify(transformedItems));
+          sessionStorage.setItem("galleryData", JSON.stringify(transformedItems));
           setItems(transformedItems);
         } catch (error) {
           console.error("Error fetching Notion data:", error);

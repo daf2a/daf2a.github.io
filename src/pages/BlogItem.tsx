@@ -34,7 +34,7 @@ const BlogItem: React.FC = () => {
 
   const fetchBlogData = async (blogId: string | undefined) => {
     if (!blogId) return;
-    const cachedData = localStorage.getItem("blogData");
+    const cachedData = sessionStorage.getItem("blogData");
       
     if (cachedData) {
       setBlog(JSON.parse(cachedData));
@@ -49,7 +49,7 @@ const BlogItem: React.FC = () => {
             throw new Error("Notion API request failed");
           }
           const blogData = response.data.find((item: Blog) => item.id === blogId);
-          localStorage.setItem("blogData", JSON.stringify(blogData));
+          sessionStorage.setItem("blogData", JSON.stringify(blogData));
           setBlog(blogData);
         } catch (error) {
           console.error("Error fetching Notion data:", error);
