@@ -38,21 +38,29 @@ const PortfolioItem: React.FC = () => {
   const fetchPortfolioData = async (portfolioId: string | undefined) => {
     if (!portfolioId) return;
 
-    try {
-      const response = await axios.get(
-        `https://be-daf2a.vercel.app/api/notion-portfolio`
-      );
-      if (response.status !== 200) {
-        throw new Error("Notion API request failed");
+    const cachedData = localStorage.getItem("portfolioData");
+      
+    if (cachedData) {
+      setPortfolio(JSON.parse(cachedData));
+    } else {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          `https://be-daf2a.vercel.app/api/notion-portfolio`
+        );
+        if (response.status !== 200) {
+          throw new Error("Notion API request failed");
+        }
+        const portfolioData = response.data.find(
+          (item: Portfolio) => item.id === portfolioId
+        );
+        localStorage.setItem("portfolioData", JSON.stringify(portfolioData));
+        setPortfolio(portfolioData);
+      } catch (error) {
+        console.error("Error fetching Notion data:", error);
+      } finally {
+        setIsLoading(false);
       }
-      const portfolioData = response.data.find(
-        (item: Portfolio) => item.id === portfolioId
-      );
-      setPortfolio(portfolioData);
-    } catch (error) {
-      console.error("Error fetching Notion data:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

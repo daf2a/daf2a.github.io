@@ -107,7 +107,7 @@ function PortfolioCard({
 
 export default function Portfolio(): ReactElement {
   const [data, setData] = useState<Portfolio[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("open"); // State untuk menyimpan tab aktif
   const navigate = useNavigate();
   const location = useLocation();
@@ -119,21 +119,29 @@ export default function Portfolio(): ReactElement {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://be-daf2a.vercel.app/api/notion-portfolio`
-        );
+      const cachedData = localStorage.getItem("portfolioData");
+      
+      if (cachedData) {
+        setData(JSON.parse(cachedData));
+      } else {
+        setIsLoading(true);
+        try {
+          const response = await axios.get(
+            `https://be-daf2a.vercel.app/api/notion-portfolio`
+          );
 
-        if (response.status !== 200) {
-          throw new Error("Notion API request failed");
+          if (response.status !== 200) {
+            throw new Error("Notion API request failed");
+          }
+
+          const sortedData = sortByDate(response.data);
+          localStorage.setItem("portfolioData", JSON.stringify(sortedData));
+          setData(sortedData);
+        } catch (error) {
+          console.error("Error fetching Notion data:", error);
+        } finally {
+          setIsLoading(false);
         }
-
-        const sortedData = sortByDate(response.data);
-        setData(sortedData);
-      } catch (error) {
-        console.error("Error fetching Notion data:", error);
-      } finally {
-        setIsLoading(false);
       }
     };
 

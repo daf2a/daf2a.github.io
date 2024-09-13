@@ -14,7 +14,7 @@ interface GalleryItem {
 
 export default function Gallery() {
   const [items, setItems] = useState<GalleryItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [showCaption, setShowCaption] = useState(true);
 
   const toggleCaption = () => setShowCaption(!showCaption);
@@ -25,29 +25,37 @@ export default function Gallery() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://be-daf2a.vercel.app/api/notion-gallery`
-        );
+      const cachedData = localStorage.getItem("galleryData");
+      
+      if (cachedData) {
+        setItems(JSON.parse(cachedData));
+      } else {
+        setIsLoading(true);
+        try {
+          const response = await axios.get(
+            `https://be-daf2a.vercel.app/api/notion-gallery`
+          );
 
-        if (response.status !== 200) {
-          throw new Error("Notion API request failed");
+          if (response.status !== 200) {
+            throw new Error("Notion API request failed");
+          }
+
+          const data = response.data;
+          const transformedItems = data.map((item: any) => ({
+            name: item.name,
+            description: item.description,
+            date: item.date,
+            img: item.img,
+          }));
+
+          localStorage.setItem("galleryData", JSON.stringify(transformedItems));
+          setItems(transformedItems);
+        } catch (error) {
+          console.error("Error fetching Notion data:", error);
+        } finally {
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          setIsLoading(false);
         }
-
-        const data = response.data;
-        const transformedItems = data.map((item: any) => ({
-          name: item.name,
-          description: item.description,
-          date: item.date,
-          img: item.img,
-        }));
-
-        setItems(transformedItems);
-      } catch (error) {
-        console.error("Error fetching Notion data:", error);
-      } finally {
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setIsLoading(false);
       }
     };
 

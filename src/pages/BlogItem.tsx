@@ -34,20 +34,28 @@ const BlogItem: React.FC = () => {
 
   const fetchBlogData = async (blogId: string | undefined) => {
     if (!blogId) return;
-
-    try {
-      const response = await axios.get(
-        `https://be-daf2a.vercel.app/api/notion-blog`
-      );
-      if (response.status !== 200) {
-        throw new Error("Notion API request failed");
-      }
-      const blogData = response.data.find((item: Blog) => item.id === blogId);
-      setBlog(blogData);
-    } catch (error) {
-      console.error("Error fetching Notion data:", error);
-    } finally {
+    const cachedData = localStorage.getItem("blogData");
+      
+    if (cachedData) {
+      setBlog(JSON.parse(cachedData));
       setIsLoading(false);
+    } else {
+      setIsLoading(true);
+      try {
+          const response = await axios.get(
+            `https://be-daf2a.vercel.app/api/notion-blog`
+          );
+          if (response.status !== 200) {
+            throw new Error("Notion API request failed");
+          }
+          const blogData = response.data.find((item: Blog) => item.id === blogId);
+          localStorage.setItem("blogData", JSON.stringify(blogData));
+          setBlog(blogData);
+        } catch (error) {
+          console.error("Error fetching Notion data:", error);
+        } finally {
+          setIsLoading(false);
+        }
     }
   };
 

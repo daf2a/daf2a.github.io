@@ -14,7 +14,7 @@ interface BackgroundItem {
 
 export default function Background() {
   const [content, setContent] = useState<BackgroundItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [loadedImages, setLoadedImages] = useState<boolean[]>([]);
 
   useEffect(() => {
@@ -23,29 +23,37 @@ export default function Background() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://be-daf2a.vercel.app/api/notion-background`
-        );
+      const cachedData = localStorage.getItem("backgroundData");
 
-        if (response.status !== 200) {
-          throw new Error("Notion API request failed");
+      if (cachedData) {
+        setContent(JSON.parse(cachedData));
+      } else {
+        setIsLoading(true);
+        try {
+          const response = await axios.get(
+            `https://be-daf2a.vercel.app/api/notion-background`
+          );
+
+          if (response.status !== 200) {
+            throw new Error("Notion API request failed");
+          }
+
+          const data = response.data;
+          const transformedContent = data.map((item: any) => ({
+            name: item.name,
+            description: item.description,
+            title: item.title,
+            img: item.img,
+          }));
+          localStorage.setItem("backgroundData", JSON.stringify(transformedContent));
+
+          setContent(transformedContent);
+          setLoadedImages(new Array(transformedContent.length).fill(false));
+        } catch (error) {
+          console.error("Error fetching Notion data:", error);
+        } finally {
+          setIsLoading(false);
         }
-
-        const data = response.data;
-        const transformedContent = data.map((item: any) => ({
-          name: item.name,
-          description: item.description,
-          title: item.title,
-          img: item.img,
-        }));
-
-        setContent(transformedContent);
-        setLoadedImages(new Array(transformedContent.length).fill(false));
-      } catch (error) {
-        console.error("Error fetching Notion data:", error);
-      } finally {
-        setIsLoading(false);
       }
     };
 

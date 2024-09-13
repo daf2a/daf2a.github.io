@@ -65,7 +65,7 @@ function BlogCard({ title, description, date, image, onClick }: BlogPost) {
 
 function Blog() {
   const [data, setData] = useState<Blog[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const isBlogRoute = location.pathname === "/blog";
   const navigate = useNavigate();
@@ -76,21 +76,29 @@ function Blog() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://be-daf2a.vercel.app/api/notion-blog`
-        );
+      const cachedData = localStorage.getItem("blogData");
 
-        if (response.status !== 200) {
-          throw new Error("Notion API request failed");
+      if (cachedData) {
+        setData(JSON.parse(cachedData));
+      } else {
+        setIsLoading(true);
+        try {
+          const response = await axios.get(
+            `https://be-daf2a.vercel.app/api/notion-blog`
+          );
+
+          if (response.status !== 200) {
+            throw new Error("Notion API request failed");
+          }
+
+          const sortedData = sortByDate(response.data);
+          localStorage.setItem("blogData", JSON.stringify(sortedData));
+          setData(sortedData);
+        } catch (error) {
+          console.error("Error fetching Notion data:", error);
+        } finally {
+          setIsLoading(false);
         }
-
-        const sortedData = sortByDate(response.data);
-        setData(sortedData);
-      } catch (error) {
-        console.error("Error fetching Notion data:", error);
-      } finally {
-        setIsLoading(false);
       }
     };
 
