@@ -24,7 +24,6 @@ interface Voice {
 const MAX_CHAR_LIMIT = 1000;
 
 
-
 export default function Voices() {
   const [voices, setVoices] = useState<Voice[]>([]);
   const [newVoice, setNewVoice] = useState('');
@@ -41,7 +40,7 @@ export default function Voices() {
   const [newReplyCharCount, setNewReplyCharCount] = useState(0);
 
   const now = new Date();
-  const jakartaOffset = 7 * 60 * 60 * 1000;
+  const jakartaOffset = 0;
   const wibTime = new Date(now.getTime() + jakartaOffset);
 
   useEffect(() => {
