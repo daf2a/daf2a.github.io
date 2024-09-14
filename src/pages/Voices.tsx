@@ -86,12 +86,12 @@ export default function Voices() {
   
   const handleSubmit = async () => {
     if (newVoice.trim() === '') {
-      toast.error('Voice cannot be empty!', { position: 'bottom-center' });
+      toast.error('Voice cannot be empty!', { position: 'bottom-center', duration: 1100, });
       return;
     }
 
     if (newVoice.length > MAX_CHAR_LIMIT) {
-      toast.error('Voice exceeds 1000 characters!', { position: 'bottom-center' });
+      toast.error('Voice exceeds 1000 characters!', { position: 'bottom-center', duration: 1100, });
       return;
     }
 
@@ -118,25 +118,28 @@ export default function Voices() {
       toast.success('Voice submitted successfully!', {
         description: isPrivate ? 'Your message is private' : 'Your message is public',
         position: 'bottom-center',
+        duration: 1100,
       });
     } catch (error) {
       console.error('Error adding voice:', error);
       toast.error('Error submitting voice', {
         position: 'bottom-center',
+        duration: 1100,
       });
     } finally {
       setLoading(false);
+      fetchVoices();
     }
   };
 
   const handleReplySubmit = async () => {
     if (newReply.trim() === '') {
-      toast.error('Reply cannot be empty!', { position: 'bottom-center' });
+      toast.error('Reply cannot be empty!', { position: 'bottom-center', duration: 1100, });
       return;
     }
 
     if (newReply.length > MAX_CHAR_LIMIT) {
-      toast.error('Reply exceeds 1000 characters!', { position: 'bottom-center' });
+      toast.error('Reply exceeds 1000 characters!', { position: 'bottom-center',duration: 1100, });
       return;
     }
 
@@ -166,11 +169,13 @@ export default function Voices() {
         setIsReplyDialogOpen(false);
         toast.success('Reply added successfully', {
           position: 'bottom-center',
+          duration: 1100,
         });
       } catch (error) {
         console.error('Error adding reply:', error);
         toast.error('Error adding reply', {
           position: 'bottom-center',
+          duration: 1100,
         });
       } finally {
         setLoading(false); 
@@ -198,7 +203,6 @@ export default function Voices() {
   const handleRefresh = () => {
     sessionStorage.removeItem('voicesData');
     fetchVoices();
-
   };
 
   return (
