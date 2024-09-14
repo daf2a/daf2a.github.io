@@ -78,6 +78,7 @@ export default function Voices() {
         setIsLoading(false);
         toast.success('Successfully loaded the latest data', {
           position: 'bottom-center',
+          duration: 1500,
         });
     }
   };
