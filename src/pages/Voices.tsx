@@ -23,7 +23,6 @@ interface Voice {
 
 const MAX_CHAR_LIMIT = 1000;
 
-
 export default function Voices() {
   const [voices, setVoices] = useState<Voice[]>([]);
   const [newVoice, setNewVoice] = useState('');
@@ -34,9 +33,8 @@ export default function Voices() {
   const [isReplyDialogOpen, setIsReplyDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
   const [newVoiceCharCount, setNewVoiceCharCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   const [newReplyCharCount, setNewReplyCharCount] = useState(0);
 
   const now = new Date();
@@ -54,7 +52,8 @@ export default function Voices() {
     const cachedVoices = sessionStorage.getItem('voicesData');
     
     if (cachedVoices) {
-      setVoices(JSON.parse(cachedVoices));
+      const cachedVoicesArray = JSON.parse(cachedVoices);
+      setVoices(cachedVoicesArray);
     } else {
       const fetchVoices = async () => {
         setIsLoading(true);
@@ -62,8 +61,9 @@ export default function Voices() {
           const response = await axios.get('https://be-daf2a.vercel.app/api/notion-voices');
           
           if (Array.isArray(response.data)) {
-            setVoices(response.data);
-            sessionStorage.setItem('voicesData', JSON.stringify(response.data));
+            const reversedVoices = response.data.reverse();
+            setVoices(reversedVoices);
+            sessionStorage.setItem('voicesData', JSON.stringify(reversedVoices));
           } else {
             console.error('Invalid data format:', response.data);
           }
@@ -91,12 +91,12 @@ export default function Voices() {
 
     setLoading(true);
     const newVoiceData = {
-        id: voices.length + 1,
-        replies: "",
-        voice: newVoice,
-        timestamp: wibTime.toISOString(),
-        isPrivate: isPrivate,
-      };      
+      id: voices.length + 1,
+      replies: "",
+      voice: newVoice,
+      timestamp: wibTime.toISOString(),
+      isPrivate: isPrivate,
+    };
 
     try {
       await axios.post('https://be-daf2a.vercel.app/api/notion-voices', newVoiceData);
@@ -219,7 +219,7 @@ export default function Voices() {
             className="flex w-auto -ml-4"
             columnClassName="pl-4 bg-clip-padding"
           >
-            {voices.map((voice) => (
+            {voices.slice().reverse().map((voice) => (
             <div key={voice.id} className="mb-4">
                 <div className="border border-zinc-800 rounded-lg p-4 shadow-sm bg-zinc-900">
                 <p className="text-zinc-200 text-left">{voice.voice}</p>
