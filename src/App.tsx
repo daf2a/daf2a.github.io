@@ -53,7 +53,7 @@ function App() {
     "/portfolio": "Portfolio",
     "/blog": "Blog",
     "/gallery": "Gallery",
-    "/voices": "Voices",
+    "/secreto": "Secreto",
   };
 
   return (
@@ -152,14 +152,14 @@ function App() {
               Gallery
             </NavLink>
             <NavLink
-              to="/voices"
+              to="/secreto"
               className={({ isActive }) =>
                 isActive
                   ? "text-foreground"
                   : "text-muted-foreground transition-colors hover:text-foreground"
               }
             >
-              Voices
+              Secreto
               <span className="ml-2 px-2 py-0.5 text-xs bg-blue-500 text-white rounded-full">
                 New
               </span>
@@ -265,14 +265,14 @@ function App() {
                 </SheetClose>
                 <SheetClose asChild>
                   <NavLink
-                    to="/voices"
+                    to="/secreto"
                     className={
-                      location.pathname.split("/")[1] === "voices"
+                      location.pathname.split("/")[1] === "secreto"
                         ? "text-foreground"
                         : "text-muted-foreground transition-colors hover:text-foreground"
                     }
                   >
-                    Voices
+                    Secreto
                     <span className="ml-2 px-2 py-0.5 text-xs bg-blue-500 text-white rounded-full">
                       New
                     </span>

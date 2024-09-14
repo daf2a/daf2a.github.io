@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         children: [{ path: ":id", element: <BlogItem /> }],
       },
       { path: "gallery", element: <Gallery /> },
-      { path: "voices", element: <Voices />}
+      { path: "secreto", element: <Voices />}
     ],
   },
 ]);

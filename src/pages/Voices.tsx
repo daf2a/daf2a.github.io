@@ -12,6 +12,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import LottieAnimationCat from "@/components/ui/LottieAnimationCat";
+import { RefreshCcw } from 'lucide-react';
 
 interface Voice {
   id: number;
@@ -55,37 +56,40 @@ export default function Voices() {
       const cachedVoicesArray = JSON.parse(cachedVoices);
       setVoices(cachedVoicesArray);
     } else {
-      const fetchVoices = async () => {
-        setIsLoading(true);
-        try {
-          const response = await axios.get('https://be-daf2a.vercel.app/api/notion-voices');
-          
-          if (Array.isArray(response.data)) {
-            const reversedVoices = response.data.reverse();
-            setVoices(reversedVoices);
-            sessionStorage.setItem('voicesData', JSON.stringify(reversedVoices));
-          } else {
-            console.error('Invalid data format:', response.data);
-          }
-        } catch (error) {
-          console.error('Error fetching voices:', error);
-        } finally {
-            setIsLoading(false);
-        }
-      };
-      
+      setIsLoading(true);
       fetchVoices();
     }
   }, []);
 
+  const fetchVoices = async () => {
+    try {
+      const response = await axios.get('https://be-daf2a.vercel.app/api/notion-voices');
+      
+      if (Array.isArray(response.data)) {
+        const reversedVoices = response.data.reverse();
+        setVoices(reversedVoices);
+        sessionStorage.setItem('voicesData', JSON.stringify(reversedVoices));
+      } else {
+        console.error('Invalid data format:', response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching voices:', error);
+    } finally {
+        setIsLoading(false);
+        toast.success('Successfully loaded the latest data', {
+          position: 'bottom-center',
+        });
+    }
+  };
+  
   const handleSubmit = async () => {
     if (newVoice.trim() === '') {
-      toast.error('Voice cannot be empty!', { position: 'bottom-right' });
+      toast.error('Voice cannot be empty!', { position: 'bottom-center' });
       return;
     }
 
     if (newVoice.length > MAX_CHAR_LIMIT) {
-      toast.error('Voice exceeds 1000 characters!', { position: 'bottom-right' });
+      toast.error('Voice exceeds 1000 characters!', { position: 'bottom-center' });
       return;
     }
 
@@ -110,13 +114,13 @@ export default function Voices() {
       setIsPrivate(false);
       setIsDialogOpen(false);
       toast.success('Voice submitted successfully!', {
-        description: isPrivate ? 'Your voice is private' : 'Your voice is public',
-        position: 'bottom-right',
+        description: isPrivate ? 'Your message is private' : 'Your message is public',
+        position: 'bottom-center',
       });
     } catch (error) {
       console.error('Error adding voice:', error);
       toast.error('Error submitting voice', {
-        position: 'bottom-right',
+        position: 'bottom-center',
       });
     } finally {
       setLoading(false);
@@ -125,12 +129,12 @@ export default function Voices() {
 
   const handleReplySubmit = async () => {
     if (newReply.trim() === '') {
-      toast.error('Reply cannot be empty!', { position: 'bottom-right' });
+      toast.error('Reply cannot be empty!', { position: 'bottom-center' });
       return;
     }
 
     if (newReply.length > MAX_CHAR_LIMIT) {
-      toast.error('Reply exceeds 1000 characters!', { position: 'bottom-right' });
+      toast.error('Reply exceeds 1000 characters!', { position: 'bottom-center' });
       return;
     }
 
@@ -159,12 +163,12 @@ export default function Voices() {
         setSelectedVoiceId(null);
         setIsReplyDialogOpen(false);
         toast.success('Reply added successfully', {
-          position: 'bottom-right',
+          position: 'bottom-center',
         });
       } catch (error) {
         console.error('Error adding reply:', error);
         toast.error('Error adding reply', {
-          position: 'bottom-right',
+          position: 'bottom-center',
         });
       } finally {
         setLoading(false); 
@@ -189,6 +193,12 @@ export default function Voices() {
     transition: 'opacity 0.5s ease-in-out',
   };
 
+  const handleRefresh = () => {
+    sessionStorage.removeItem('voicesData');
+    fetchVoices();
+
+  };
+
   return (
     <>
     <AnimatePresence>
@@ -210,7 +220,7 @@ export default function Voices() {
     </div>
 
     <div className="text-zinc-200" style={fadeStyle}>
-      <Toaster position="bottom-right" className="z-50"/>
+      <Toaster position="bottom-center" className="z-50"/>
 
       <div className={`transition-all duration-300 ${isDialogOpen || isReplyDialogOpen ? 'blur-sm brightness-50' : ''}`}>
         <div className="container mx-auto p-4 pb-20">
@@ -257,7 +267,7 @@ export default function Voices() {
 
       {/* Add new voice */}
       <div className={`z-30 fixed bottom-0 left-0 right-0 bg-zinc-900 border-t border-zinc-800 py-4 transition-all duration-300 ${isDialogOpen ? 'blur-sm brightness-50' : ''}`}>
-        <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 flex items-center space-x-2">
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="w-full bg-zinc-800 hover:bg-zinc-600 text-zinc-200">
@@ -270,7 +280,7 @@ export default function Voices() {
               </DialogHeader>
               <div>
                 <Textarea
-                    placeholder="Type your voice here (max 1000 characters)"
+                    placeholder="Type your message here (max 1000 characters)"
                     value={newVoice}
                     onChange={(e) => {
                     setNewVoice(e.target.value);
@@ -297,6 +307,9 @@ export default function Voices() {
               </Button>
             </DialogContent>
           </Dialog>
+          <Button onClick={handleRefresh} className="bg-zinc-800 hover:bg-zinc-600 text-zinc-200 p-2 flex items-center justify-center h-10 w-10">
+            <RefreshCcw className="h-5 w-5" />
+          </Button>
         </div>
       </div>
 
