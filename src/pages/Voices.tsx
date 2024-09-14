@@ -288,7 +288,7 @@ export default function Voices() {
                     onCheckedChange={(checked) => setIsPrivate(checked)}
                     />
                     <Label htmlFor="private-mode" className="text-zinc-200">
-                    Private <span className="text-xs text-zinc-500">(This message won't be visible to the public)</span>
+                    Private <span className="text-xs text-zinc-500">(not visible to public)</span>
                     </Label>
                 </div>
                 </div>
