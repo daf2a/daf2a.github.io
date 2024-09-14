@@ -21,7 +21,7 @@ import {
   SiLatex,
 } from "react-icons/si";
 import { LiaAdobe } from "react-icons/lia";
-import { TbBrandKotlin } from "react-icons/tb";
+import { SiKotlin } from "react-icons/si";
 
 import Dicoding from "./../assets/dicoding.png";
 import Rubrik from "./../assets/rubrikgrafis.png";
@@ -86,7 +86,7 @@ export default function SkillsAndCertifications() {
     { icon: SiArduino, text: "Arduino" },
     { icon: FaPython, text: "Python" },
     { icon: SiFlask, text: "Flask" },
-    { icon: TbBrandKotlin, text: "Kotlin" },
+    { icon: SiKotlin, text: "Kotlin" },
     { icon: FaAndroid, text: "Android SDK" },
     { icon: FaPhp, text: "PHP" },
     { icon: SiLaravel, text: "Laravel" },

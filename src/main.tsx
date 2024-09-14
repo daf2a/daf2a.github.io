@@ -11,6 +11,7 @@ import Blog from "./pages/Blog";
 import Gallery from "./pages/Gallery";
 import PortfolioItem from "./pages/PortfolioItem";
 import BlogItem from "./pages/BlogItem";
+import Voices from "./pages/Voices";
 
 import "./index.css";
 
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
         children: [{ path: ":id", element: <BlogItem /> }],
       },
       { path: "gallery", element: <Gallery /> },
+      { path: "voices", element: <Voices />}
     ],
   },
 ]);

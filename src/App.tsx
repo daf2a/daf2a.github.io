@@ -53,6 +53,7 @@ function App() {
     "/portfolio": "Portfolio",
     "/blog": "Blog",
     "/gallery": "Gallery",
+    "/voices": "Voices",
   };
 
   return (
@@ -149,6 +150,19 @@ function App() {
               }
             >
               Gallery
+            </NavLink>
+            <NavLink
+              to="/voices"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-foreground"
+                  : "text-muted-foreground transition-colors hover:text-foreground"
+              }
+            >
+              Voices
+              <span className="ml-2 px-2 py-0.5 text-xs bg-blue-500 text-white rounded-full">
+                New
+              </span>
             </NavLink>
           </nav>
           <Sheet>
@@ -249,6 +263,21 @@ function App() {
                     Gallery
                   </NavLink>
                 </SheetClose>
+                <SheetClose asChild>
+                  <NavLink
+                    to="/voices"
+                    className={
+                      location.pathname.split("/")[1] === "voices"
+                        ? "text-foreground"
+                        : "text-muted-foreground transition-colors hover:text-foreground"
+                    }
+                  >
+                    Voices
+                    <span className="ml-2 px-2 py-0.5 text-xs bg-blue-500 text-white rounded-full">
+                      New
+                    </span>
+                  </NavLink>
+                </SheetClose>
               </nav>
             </SheetContent>
           </Sheet>
@@ -328,18 +357,9 @@ function App() {
                             <SiNotion className="flex-shrink-0 w-14 h-14 text-primary-foreground" />
                           </div>
                           <div className="mt-3">
-                            <h3 className="text-lg font-semibold ">Notion</h3>
+                            <h3 className="text-lg font-semibold ">Notion API</h3>
                             <p className="mt-1 text-muted-foreground">
-                              To store database and content dynamically, view
-                              database{" "}
-                              <a
-                                href="https://daf2a.notion.site/Portofolio-API-0ac19e9a8a5d4edcb47863da52008ec3?pvs=4"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-500 font-bold underline"
-                              >
-                                here
-                              </a>
+                              To store database and content dynamically
                             </p>
                           </div>
                         </div>

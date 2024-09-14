@@ -38,3 +38,36 @@
 .read-the-docs {
   color: #888;
 }
+
+.reply-hierarchy {
+  position: relative;
+  padding-left: 20px;
+}
+
+.reply-hierarchy::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0;
+  bottom: 20px;
+  width: 2px;
+  background-color: #555;
+  border-radius: 4px;
+}
+
+.reply-text-wrapper {
+  position: relative;
+  padding-left: 10px;
+}
+
+.reply-text-wrapper::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: -10px;
+  height: 100%;
+  width: 15px;
+  border-bottom: 2px solid #555;
+  border-left: 2px solid #555;
+  border-bottom-left-radius: 7px;
+}
