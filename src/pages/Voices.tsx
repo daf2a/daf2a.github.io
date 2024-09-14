@@ -83,6 +83,7 @@ export default function Voices() {
     }
   };
   
+  
   const handleSubmit = async () => {
     if (newVoice.trim() === '') {
       toast.error('Voice cannot be empty!', { position: 'bottom-center' });
