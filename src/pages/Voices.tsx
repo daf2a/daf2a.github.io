@@ -23,6 +23,8 @@ interface Voice {
 
 const MAX_CHAR_LIMIT = 1000;
 
+
+
 export default function Voices() {
   const [voices, setVoices] = useState<Voice[]>([]);
   const [newVoice, setNewVoice] = useState('');
@@ -33,9 +35,21 @@ export default function Voices() {
   const [isReplyDialogOpen, setIsReplyDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [newVoiceCharCount, setNewVoiceCharCount] = useState(0);
   const [newReplyCharCount, setNewReplyCharCount] = useState(0);
+
+  const now = new Date();
+  const jakartaOffset = 7 * 60 * 60 * 1000;
+  const wibTime = new Date(now.getTime() + jakartaOffset);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+  });
 
   useEffect(() => {
     const cachedVoices = sessionStorage.getItem('voicesData');
@@ -78,12 +92,12 @@ export default function Voices() {
 
     setLoading(true);
     const newVoiceData = {
-      id: voices.length + 1,
-      replies: "",
-      voice: newVoice,
-      timestamp: new Date().toISOString(),
-      isPrivate: isPrivate,
-    };
+        id: voices.length + 1,
+        replies: "",
+        voice: newVoice,
+        timestamp: wibTime.toISOString(),
+        isPrivate: isPrivate,
+      };      
 
     try {
       await axios.post('https://be-daf2a.vercel.app/api/notion-voices', newVoiceData);
@@ -171,6 +185,11 @@ export default function Voices() {
     500: 1,
   };
 
+  const fadeStyle = {
+    opacity: isVisible ? 1 : 0,
+    transition: 'opacity 0.5s ease-in-out',
+  };
+
   return (
     <>
     <AnimatePresence>
@@ -191,7 +210,7 @@ export default function Voices() {
         <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-zinc-950 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
     </div>
 
-    <div className="text-zinc-200">
+    <div className="text-zinc-200" style={fadeStyle}>
       <Toaster position="bottom-right" className="z-50"/>
 
       <div className={`transition-all duration-300 ${isDialogOpen || isReplyDialogOpen ? 'blur-sm brightness-50' : ''}`}>
