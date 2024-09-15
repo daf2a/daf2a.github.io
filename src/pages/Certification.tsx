@@ -61,9 +61,9 @@ const Item: React.FC<ItemProps> = ({
   <div
     className={`bg-zinc-900 w-full rounded-lg p-4 flex justify-between space-y-2 relative ${className}`}
   >
-    <div className="flex flex-col">
+    <div className="flex flex-col items-start">
       {typeof Icon === "string" ? (
-        <Image src={Icon} alt={text} className="h-8 py-1 w-fit" />
+        <Image src={Icon} alt={text} className="h-8 py-1 object-contain" />
       ) : (
         <Icon className="h-8 w-8" />
       )}
