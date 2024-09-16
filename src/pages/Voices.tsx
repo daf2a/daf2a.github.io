@@ -115,14 +115,14 @@ export default function Voices() {
       setNewVoiceCharCount(0);
       setIsPrivate(false);
       setIsDialogOpen(false);
-      toast.success('Voice submitted successfully!', {
+      toast.success('Message submitted successfully!', {
         description: isPrivate ? 'Your message is private' : 'Your message is public',
         position: 'bottom-center',
         duration: 1100,
       });
     } catch (error) {
-      console.error('Error adding voice:', error);
-      toast.error('Error submitting voice', {
+      console.error('Error adding message:', error);
+      toast.error('Error submitting message', {
         position: 'bottom-center',
         duration: 1100,
       });
@@ -205,6 +205,10 @@ export default function Voices() {
     fetchVoices();
   };
 
+  function isLastReply(index: number, replies: string[]): boolean {
+    return index === replies.length - 1;
+  }
+
   return (
     <>
     <AnimatePresence>
@@ -238,9 +242,9 @@ export default function Voices() {
             {voices.slice().reverse().map((voice) => (
             <div key={voice.id} className="mb-4">
                 <div className="border border-zinc-800 rounded-lg p-4 shadow-sm bg-zinc-900">
-                <p className="text-zinc-200 text-left">{voice.voice}</p>
+                <p className="text-zinc-200 text-left break-words overflow-hidden text-ellipsis">{voice.voice}</p>
 
-                <div className="flex items-center justify-between mt-2">
+                <div className="flex items-center justify-between my-2">
                     <div
                         onClick={() => {
                             setSelectedVoiceId(voice.id);
@@ -256,13 +260,23 @@ export default function Voices() {
                 </div>
 
                 {voice.replies && (
-                    <div className="reply-hierarchy mt-4">
+                  <div>
                     {splitReplies(voice.replies).map((reply, index) => (
-                        <div key={index} className="reply-text-wrapper">
-                        <p className="reply-text mt-1 text-left">{reply}</p>
+                      !isLastReply(index, splitReplies(voice.replies)) ? (
+                        <div key={index} className="reply-hierarchy">
+                          <div className="reply-text-wrapper">
+                            <p className="reply-text mt-1 text-left">{reply}</p>
+                          </div>
                         </div>
+                      ) : (
+                        <div className="last-reply-hierarchy">
+                          <div key={index} className="reply-text-wrapper">
+                            <p className="reply-text mt-1 text-left">{reply}</p>
+                          </div>
+                        </div>
+                      )
                     ))}
-                    </div>
+                  </div>
                 )}
                 </div>
             </div>
@@ -326,7 +340,7 @@ export default function Voices() {
             <DialogTrigger asChild></DialogTrigger>
             <DialogContent className="sm:max-w-[425px] bg-zinc-900 text-zinc-200 rounded-xl border-zinc-800">
               <DialogHeader>
-                <DialogTitle className="text-zinc-200">Reply to Voice</DialogTitle>
+                <DialogTitle className="text-zinc-200">Add New Reply</DialogTitle>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <Textarea

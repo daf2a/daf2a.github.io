@@ -1,4 +1,3 @@
-// src/pages/Portfolio.tsx
 import axios from "axios";
 import { useState, useEffect, ReactElement } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -108,7 +107,7 @@ function PortfolioCard({
 export default function Portfolio(): ReactElement {
   const [data, setData] = useState<Portfolio[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("open"); // State untuk menyimpan tab aktif
+  const [activeTab, setActiveTab] = useState("open");
   const navigate = useNavigate();
   const location = useLocation();
   const isPortfolioRoute = location.pathname === "/portfolio";

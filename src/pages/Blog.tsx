@@ -1,4 +1,3 @@
-// src/pages/Blog.tsx
 import { BsCalendarDate } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { BlockMapType } from "react-notion";

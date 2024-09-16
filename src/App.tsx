@@ -1,4 +1,3 @@
-// src/App.tsx
 import { useState, useEffect } from "react";
 import { NavLink, useLocation, Outlet } from "react-router-dom";
 import LogoDark from "./assets/d_logo_dark.svg";

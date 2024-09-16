@@ -39,7 +39,6 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 
-// Type definitions
 interface ItemProps {
   icon: React.ElementType | string;
   text: string;
@@ -49,7 +48,6 @@ interface ItemProps {
   link?: string;
 }
 
-// Reusable Skill/Certification Item
 const Item: React.FC<ItemProps> = ({
   icon: Icon,
   text,

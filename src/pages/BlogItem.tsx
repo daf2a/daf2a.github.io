@@ -1,4 +1,3 @@
-// src/pages/BlogItem.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { NotionRenderer, BlockMapType } from "react-notion";
