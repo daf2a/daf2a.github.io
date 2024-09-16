@@ -71,3 +71,8 @@
   border-left: 2px solid #555;
   border-bottom-left-radius: 7px;
 }
+
+p {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
